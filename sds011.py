@@ -5,7 +5,7 @@
 from __future__ import print_function
 import serial, struct, sys, time, json, subprocess
 #import configparser
-import sendvaluesapi
+# import sendvaluesapi
 
 # config = configparser.ConfigParser()
 # cfgFile = './config.cfg'
