@@ -4,7 +4,8 @@
 import Adafruit_DHT
 import RPi.GPIO as GPIO
 import configparser
-# import sendvaluesapi
+import datetime, time
+from apis.send2influxapi import *
 
 config = configparser.ConfigParser()
 cfgFile = './config.cfg'
@@ -18,6 +19,8 @@ GPIO.setmode(GPIO.BCM)
 
 # Sensortype DHT11=11, DHT22=22
 humi, temp = Adafruit_DHT.read_retry(22, 4)
+time.sleep(1)
+humi, temp = Adafruit_DHT.read_retry(22, 4)
 humi, temp = round(humi,1), round(temp,1)
 print(humi, temp)
 
@@ -28,7 +31,7 @@ if type(temp) is not float:
 if type(humi) is not float:
     humi = 0.0
 
-# sendvaluesapi.write2api('temperature.air', temp)
-# sendvaluesapi.write2api('humidity.air', humi)
+ts = getInflxTimestamp()
+data = f'air,sensor_id=DHT22 temperature={temp},humidity={humi} {ts}'
 
-
+write2influxapi(data)
