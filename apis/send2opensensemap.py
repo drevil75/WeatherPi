@@ -39,16 +39,14 @@ def getOSMTimestamp():
 
 
 #def postOSMvalues(sensorID, val, ts):
-def postOSMvalues(data):
+def postOSMvalues(payload):
    print('-------postOSMvalues-------')
 
    # url = osm_url + f'{senseBoxID}/{sensorID}'
    url = osm_url + f'{senseBoxID}/data'
    # payload = json.dumps({"value": f"{val}", "createdAt": f"{ts}"})
    # payload = {"value": f"{val}", "createdAt": f"{ts}"}
-   payload = data
    headers = {'Authorization': f'{OpenSenseMap_TOKEN}', 'Content-Type': 'application/json'}
-
    print(url, payload)
    
    
@@ -66,5 +64,5 @@ def postOSMvalues(data):
    if err_code != 1:
       # data = f'{sensorID}, {payload}'
       f = open(cachefile, mode='a', encoding='utf-8')
-      f.write(f'{data}\n')
+      f.write(f'{json.dumps(payload)}\n')
       f.close()
