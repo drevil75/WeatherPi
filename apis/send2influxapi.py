@@ -26,16 +26,16 @@ def getInflxTimestamp(): # returns unix timestamp
    ts = time.mktime(now.timetuple())
    return ts
 
-
-
 def write2influxapi(data):
+   print('-------write2influxapi-------')
+   print(f'data={data}')
 
    # data = f'airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 {ts}\n \
    #          airSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 {ts}'
 
    try:
       r = requests.post(url, data=data, headers=headers, timeout=10)
-      print(r, r.text, r.status_code)
+      print(f'rc={r.status_code}, rtext{r.text}')
       if r.status_code in [200, 201, 202, 203, 204]:
          err_code = 1
       else:   
