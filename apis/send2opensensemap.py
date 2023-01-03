@@ -42,14 +42,16 @@ def postOSMvalues(sensorID, val, ts):
    print('-------postOSMvalues-------')
 
    url = osm_url + f'{senseBoxID}/{sensorID}'
-   payload = json.dumps({"value": f"{val}", "createdAt": f"{ts}"})
+   # payload = json.dumps({"value": f"{val}", "createdAt": f"{ts}"})
+   payload = {"value": f"{val}", "createdAt": f"{ts}"}
    headers = {'Authorization': f'{OpenSenseMap_TOKEN}', 'Content-Type': 'application/json'}
 
    print(url, payload)
    
    
    try:
-         r = requests.post(url, headers=headers, data=payload, timeout=10)
+         # r = requests.post(url, headers=headers, data=payload, timeout=10)
+         r = requests.post(url, headers=headers, json=payload, timeout=10)
          print(f'rc={r.status_code}')
          if r.status_code in [200, 201, 202, 203, 204]:
             err_code = 1
