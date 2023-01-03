@@ -31,7 +31,7 @@ def getInflxTimestamp():
 
 def write2influxapi(data):
 
-   now = datetime.datetime.now()
+   now = datetime.datetime.now(datetime.timezone.utc)
    ts = int(datetime.datetime.timestamp(now))
    now2 = str(now).replace(' ','T').split('.')[0] + '.000Z'
    

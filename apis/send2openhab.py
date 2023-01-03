@@ -30,7 +30,7 @@ oh_soundID = config['openhab']['soundID']
 
 
 def getOpenhabTimestamp():
-   now = datetime.datetime.now()
+   now = datetime.datetime.now(datetime.timezone.utc)
    ts = int(datetime.datetime.timestamp(now))
    ts = str(now).replace(' ','T').split('.')[0] + '.000Z'
    return ts

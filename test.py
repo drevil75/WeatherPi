@@ -1,10 +1,9 @@
-import json
+import datetime
 
-sensorID = 'abc'
-val = 9.6
-ts = '2022-09-29T8'
-payload = {"value": f"{val}", "createdAt": f"{ts}"}
-data = f'{sensorID}, {json.dumps(payload)}'
+def getOSMTimestamp():
+   now = datetime.datetime.now(datetime.timezone.utc)
+   ts = int(datetime.datetime.timestamp(now))
+   ts = str(now).replace(' ','T').split('.')[0] + '.000Z'
+   return ts
 
-print(payload)
-print(data)
+print(getOSMTimestamp())
