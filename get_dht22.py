@@ -22,16 +22,18 @@ def read_dht22():
 
     
     while val_valid == False and c_loop < 3:
+        time.sleep(2)
         try:
             # Print the values to the serial port
             temperature_c = dhtDevice.temperature # Fahrenheit = temperature_c * (9 / 5) + 32
             humidity = dhtDevice.humidity
+            print(type(temperature_c), type(humidity))
             if type(temperature_c) == 'float':
                 val_valid = True
                 c_loop = 3
                 temperature_c, humidity = round(temperature_c,2), round(humidity,2)
 
-            print(temperature_c, humidity)
+                print('c_loop=' + str(c_loop))
 
         except RuntimeError as error:
             # Errors happen fairly often, DHT's are hard to read, just keep going
