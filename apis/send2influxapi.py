@@ -22,7 +22,7 @@ status = 0
 
 
 def getInflxTimestamp():
-   now = datetime.datetime.now()
+   now = datetime.datetime.now(datetime.timezone.utc)
    ts = int(datetime.datetime.timestamp(now))
    ts = str(now).replace(' ','T').split('.')[0] + '.000Z'
    return ts
@@ -31,15 +31,11 @@ def getInflxTimestamp():
 
 def write2influxapi(data):
 
-   now = datetime.datetime.now(datetime.timezone.utc)
-   ts = int(datetime.datetime.timestamp(now))
-   now2 = str(now).replace(' ','T').split('.')[0] + '.000Z'
-   
    # data = f'airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 {ts}\n \
    #          airSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 {ts}'
 
    try:
-      r = requests.post(url, data=data, headers=headers, timeout=5)
+      r = requests.post(url, data=data, headers=headers, timeout=10)
       print(r, r.text, r.status_code)
       if r.status_code in [200, 201, 202, 203, 204]:
          err_code = 1

@@ -36,6 +36,7 @@ if type(humi) is not float:
 
 ts = getInflxTimestamp()
 write2influxapi(f'air,sensor_id=DHT22 temperature={temp},humidity={humi} {ts}')
+
 ts = getOSMTimestamp()
 postOSMvalues(tempID, temp, ts)
 postOSMvalues(humiID, humi, ts)
