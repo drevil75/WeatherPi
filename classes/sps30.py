@@ -4,7 +4,7 @@ import logging
 from time import sleep
 from queue import Queue
 from datetime import datetime
-from i2c import I2C
+from classes.i2c import I2C
 
 # I2C commands
 CMD_START_MEASUREMENT = [0x00, 0x10]
