@@ -1,6 +1,6 @@
 #pip install influxdb-client
 
-import datetime
+import datetime, time
 import requests, json
 import configparser
 from dotenv import dotenv_values
@@ -21,10 +21,9 @@ headers = {'Authorization': f'Token {INFLUXDB_TOKEN}','Content-Type': 'text/plai
 status = 0
 
 
-def getInflxTimestamp():
+def getInflxTimestamp(): # returns unix timestamp
    now = datetime.datetime.now(datetime.timezone.utc)
-   ts = int(datetime.datetime.timestamp(now))
-   ts = str(now).replace(' ','T').split('.')[0] + '.000Z'
+   ts = time.mktime(now.timetuple())
    return ts
 
 
