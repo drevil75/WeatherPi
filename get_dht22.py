@@ -13,16 +13,13 @@ cfgFile = './config.cfg'
 config.read(cfgFile)
 sections = config.sections()
 
-# sensortype = int(config['dht22']['sensortype'])
-# sensorpin = int(config['dht22']['sensorpin'])
 dhtDevice = adafruit_dht.DHT22(board.D27)
-
-# GPIO.setmode(GPIO.BCM)
-val_valid = False
-c_loop = 0
 
 def read_dht22():
     print('---------read_dht22--------')
+    val_valid = False
+    c_loop = 0
+
     
     while val_valid == False and c_loop < 3:
         try:
@@ -55,17 +52,17 @@ def read_dht22():
 
     ts = getInflxTimestamp()
     print(ts)
-    write2influxapi(f'dht22,type=air  temperature={temp},humidity={humi} {ts}')
+    write2influxapi(f'dht22,type=air  temperature={temperature_c},humidity={humidity} {ts}')
 
     ts = getOSMTimestamp()
     osm_data = [
-    {"sensor": f"{tempID}","value": f"{temp}","createdAt": f"{ts}"},
-    {"sensor": f"{humiID}","value": f"{humi}","createdAt": f"{ts}"}
+    {"sensor": f"{tempID}","value": f"{temperature_c}","createdAt": f"{ts}"},
+    {"sensor": f"{humiID}","value": f"{humidity}","createdAt": f"{ts}"}
     ]
     postOSMvalues(osm_data)
 
-    postOpenhabValues(oh_tempID, temp, ts)
-    postOpenhabValues(oh_humiID, humi, ts)
+    postOpenhabValues(oh_tempID, temperature_c, ts)
+    postOpenhabValues(oh_humiID, humidity, ts)
 
 if __name__ == "__main__":
     read_dht22()
