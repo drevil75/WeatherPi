@@ -44,7 +44,7 @@ def postOSMvalues(payload):
 
    url = osm_url + f'{senseBoxID}/data'
    headers = {'Authorization': f'{OpenSenseMap_TOKEN}', 'Content-Type': 'application/json'}
-   print(url, payload)
+   print(url, json.dumps(payload))
    
 
    # try:
