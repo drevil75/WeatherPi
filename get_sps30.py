@@ -47,10 +47,10 @@ data = f'particular_matter,sensor_id=sps30 dense_pm1={dense_pm1},dense_pm25={den
 write2influxapi(data)
 
 ts = getOSMTimestamp()
-postOSMvalues(dense_pm1_ID, dense_pm1, ts)
-postOSMvalues(dense_pm4_ID, dense_pm4, ts)
-postOSMvalues(dense_pm10_ID, dense_pm10, ts)
-postOSMvalues(dense_pm25_ID, dense_pm25, ts)
+# postOSMvalues(dense_pm1_ID, dense_pm1, ts)
+# postOSMvalues(dense_pm4_ID, dense_pm4, ts)
+# postOSMvalues(dense_pm10_ID, dense_pm10, ts)
+# postOSMvalues(dense_pm25_ID, dense_pm25, ts)
 
 
 data = [
