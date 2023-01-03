@@ -171,6 +171,4 @@ osm_data = [
 postOSMvalues(osm_data)
 
 ts = getOpenhabTimestamp()
-postOpenhabValues()
-
 postOpenhabValues(oh_presID, pressure, ts)

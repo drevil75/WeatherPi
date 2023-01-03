@@ -37,5 +37,3 @@ osm_data = [
 postOSMvalues(osm_data)
 
 postOpenhabValues(oh_soundID, val, ts)
-
-print("Channel A0: " + str(val))
