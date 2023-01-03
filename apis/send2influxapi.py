@@ -35,7 +35,7 @@ def write2influxapi(data):
 
    try:
       r = requests.post(url, data=data, headers=headers, timeout=10)
-      print(f'rc={r.status_code}, rtext{r.text}')
+      print(f'rc={r.status_code}')
       if r.status_code in [200, 201, 202, 203, 204]:
          err_code = 1
       else:   
