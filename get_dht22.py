@@ -27,7 +27,6 @@ def read_dht22():
             # Print the values to the serial port
             temperature_c = dhtDevice.temperature # Fahrenheit = temperature_c * (9 / 5) + 32
             humidity = dhtDevice.humidity
-            print(type(temperature_c), type(humidity))
             if isinstance(temperature_c,float):
                 val_valid = True
                 c_loop = 3
