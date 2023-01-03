@@ -38,7 +38,6 @@ def getOSMTimestamp():
    return ts
 
 
-#def postOSMvalues(sensorID, val, ts):
 def postOSMvalues(payload):
    print('-------postOSMvalues-------')
 
@@ -46,20 +45,19 @@ def postOSMvalues(payload):
    headers = {'Authorization': f'{OpenSenseMap_TOKEN}', 'Content-Type': 'application/json'}
    print(url, json.dumps(payload))
    
+   try:
+      r = requests.post(url, headers=headers, json=payload, timeout=10)
+      print(f'rc={r.status_code}')
+      if r.status_code in [200, 201, 202, 203, 204]:
+         err_code = 1
+      else:   
+         err_code = r.text
+   except:
+      err_code = 'timeout'
+      print('exception raised')
 
-   # try:
-   #    # r = requests.post(url, headers=headers, data=payload, timeout=10)
-   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=10)
-   print(r)
-   #    if r.status_code in [200, 201, 202, 203, 204]:
-   #       err_code = 1
-   #    else:   
-   #       err_code = r.text
-   # except:
-   #    err_code = 'timeout'
-
-   # if err_code != 1:
-   #    # data = f'{sensorID}, {payload}'
-   #    f = open(cachefile, mode='a', encoding='utf-8')
-   #    f.write(f'{json.dumps(payload)}\n')
-   #    f.close()
+   if err_code != 1:
+      # data = f'{sensorID}, {payload}'
+      f = open(cachefile, mode='a', encoding='utf-8')
+      f.write(f'{json.dumps(payload)}\n')
+      f.close()
