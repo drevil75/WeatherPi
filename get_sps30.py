@@ -52,8 +52,8 @@ ts = getOSMTimestamp()
 # postOSMvalues(dense_pm10_ID, dense_pm10, ts)
 # postOSMvalues(dense_pm25_ID, dense_pm25, ts)
 
-
-data = [
+# send a bunch of data to OSM (prevents response 429 too many requests)
+osm_data = [
     {"sensor": f"{dense_pm1_ID}", "value": f"{dense_pm1}", "createdAt": f"{ts}"},
     {"sensor": f"{dense_pm4_ID}", "value": f"{dense_pm4}", "createdAt": f"{ts}"},
     {"sensor": f"{dense_pm10_ID}", "value": f"{dense_pm10}", "createdAt": f"{ts}"},
@@ -64,13 +64,8 @@ data = [
     {"sensor": f"{count_partical_pm10_ID}", "value": f"{c_pm10}", "createdAt": f"{ts}"},
     {"sensor": f"{count_partical_pm25_ID}", "value": f"{c_pm25}", "createdAt": f"{ts}"}
     ]
-print(data)
+
 postOSMvalues(data)
-# postOSMvalues(count_partical_pm05_ID, c_pm05, ts)
-# postOSMvalues(count_partical_pm1_ID, c_pm1, ts)
-# postOSMvalues(count_partical_pm4_ID, c_pm4, ts)
-# postOSMvalues(count_partical_pm10_ID, c_pm10, ts)
-# postOSMvalues(count_partical_pm25_ID, c_pm25, ts)
 
 postOpenhabValues(oh_dense_pm1_ID, dense_pm1, ts)
 postOpenhabValues(oh_dense_pm4_ID, dense_pm4, ts)
