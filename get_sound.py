@@ -31,10 +31,10 @@ ts = getInflxTimestamp()
 write2influxapi(f'dfrobot,type=sound  volume={val} {ts}')
 
 ts = getOSMTimestamp()
-data = [
+osm_data = [
    {"sensor": f"{soundID}","value": f"{val}","createdAt": f"{ts}"}
 ]
-postOSMvalues(data)
+postOSMvalues(osm_data)
 
 postOpenhabValues(oh_soundID, val, ts)
 

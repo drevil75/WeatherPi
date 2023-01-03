@@ -61,7 +61,7 @@ osm_data = [
     {"sensor": f"{count_partical_pm25_ID}", "value": f"{c_pm25}", "createdAt": f"{ts}"}
     ]
 
-postOSMvalues(data)
+postOSMvalues(osm_data)
 
 postOpenhabValues(oh_dense_pm1_ID, dense_pm1, ts)
 postOpenhabValues(oh_dense_pm4_ID, dense_pm4, ts)

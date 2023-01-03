@@ -31,6 +31,9 @@ with board.I2C() as i2c:
     write2influxapi(f'veml6070,type=uv uv={uv_raw} {ts}')
 
     ts = getOSMTimestamp()
-    postOSMvalues(uvID, uv_raw, ts)
+    osm_data = [
+        {"sensor": f"{uvID}","value": f"{uv_raw}","createdAt": f"{ts}"}
+    ]
+    postOSMvalues(osm_data)
 
     postOpenhabValues(oh_uvID, uv_raw, ts)

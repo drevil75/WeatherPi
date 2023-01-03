@@ -38,11 +38,11 @@ print(ts)
 write2influxapi(f'dht22,type=air  temperature={temp},humidity={humi} {ts}')
 
 ts = getOSMTimestamp()
-data = [
+osm_data = [
    {"sensor": f"{tempID}","value": f"{temp}","createdAt": f"{ts}"},
    {"sensor": f"{humiID}","value": f"{humi}","createdAt": f"{ts}"}
 ]
-postOSMvalues(data)
+postOSMvalues(osm_data)
 
 postOpenhabValues(oh_tempID, temp, ts)
 postOpenhabValues(oh_humiID, humi, ts)

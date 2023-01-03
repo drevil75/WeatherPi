@@ -165,10 +165,10 @@ ts = getInflxTimestamp()
 write2influxapi(f'bme280,type=air temperature={temperature},humidity={humidity},pressure={pressure} {ts}')
 
 ts = getOSMTimestamp()
-data = [
+osm_data = [
    {"sensor": f"{presID}","value": f"{pressure}","createdAt": f"{ts}"}
 ]
-postOSMvalues(data)
+postOSMvalues(osm_data)
 
 ts = getOpenhabTimestamp()
 postOpenhabValues()
