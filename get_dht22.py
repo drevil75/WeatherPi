@@ -1,7 +1,6 @@
-#sudo apt install Adafruit-DHT RPi.GPIO
-# pip3 install ephem
 
-import Adafruit_DHT
+import board
+import adafruit_dht
 import RPi.GPIO as GPIO
 import configparser
 import datetime, time
@@ -14,26 +13,44 @@ cfgFile = './config.cfg'
 config.read(cfgFile)
 sections = config.sections()
 
-sensortype = int(config['dht22']['sensortype'])
-sensorpin = int(config['dht22']['sensorpin'])
+# sensortype = int(config['dht22']['sensortype'])
+# sensorpin = int(config['dht22']['sensorpin'])
+dhtDevice = adafruit_dht.DHT22(board.D27)
 
-GPIO.setmode(GPIO.BCM)
-
+# GPIO.setmode(GPIO.BCM)
+val_valid = False
+c_loop = 0
 
 def read_dht22():
     print('---------read_dht22--------')
-    # Sensortype DHT11=11, DHT22=22
-    for i in range(5):
-        humi, temp = Adafruit_DHT.read_retry(sensortype, sensorpin)
-        time.sleep(0.5)
-        humi, temp = round(humi,1), round(temp,1)
-        print(humi, temp)
+    
+    while val_valid == False and c_loop < 3:
+        try:
+            # Print the values to the serial port
+            temperature_c = dhtDevice.temperature # Fahrenheit = temperature_c * (9 / 5) + 32
+            humidity = dhtDevice.humidity
+            if type(temperature_c) == 'float':
+                val_valid = True
+                c_loop = 3
+                temperature_c, humidity = round(temperature_c,2), round(humidity,2)
+
+            print(temperature_c, humidity)
+
+        except RuntimeError as error:
+            # Errors happen fairly often, DHT's are hard to read, just keep going
+            print(error.args[0])
+            time.sleep(2.0)
+            c_loop += 1
+            continue
+        except Exception as error:
+            dhtDevice.exit()
+            raise error
 
 
-    if type(temp) is not float:
+    if type(temperature_c) is not float:
         temp = 0.0
 
-    if type(humi) is not float:
+    if type(humidity) is not float:
         humi = 0.0
 
     ts = getInflxTimestamp()
