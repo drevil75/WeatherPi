@@ -8,10 +8,28 @@ from get_veml6070 import *
 
 
 while True:
-    read_bme280()
-    read_dht22()
-    read_sound()
-    read_sps30()
-    read_tsl45315()
-    read_veml6070()
-    time.sleep(60)
+    try:
+        read_bme280()
+    except:
+        pass
+    try:
+        read_dht22()
+    except:
+        pass
+    try:
+        read_sound()
+    except:
+        pass
+    try:
+        read_sps30()
+    except:
+        pass
+    try:
+        read_tsl45315()
+    except:
+        pass
+    try:
+        read_veml6070()
+    except:
+        pass
+    # time.sleep(60)
