@@ -20,11 +20,12 @@ sensorpin = int(config['dht22']['sensorpin'])
 GPIO.setmode(GPIO.BCM)
 
 # Sensortype DHT11=11, DHT22=22
-humi, temp = Adafruit_DHT.read_retry(sensortype, sensorpin)
-time.sleep(1)
-humi, temp = Adafruit_DHT.read_retry(sensortype, sensorpin)
-humi, temp = round(humi,1), round(temp,1)
-print(humi, temp)
+for i in range(5):
+    humi, temp = Adafruit_DHT.read_retry(sensortype, sensorpin)
+    time.sleep(1)
+    humi, temp = Adafruit_DHT.read_retry(sensortype, sensorpin)
+    humi, temp = round(humi,1), round(temp,1)
+    print(humi, temp)
 
 
 if type(temp) is not float:
