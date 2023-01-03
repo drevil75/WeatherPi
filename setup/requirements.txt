@@ -1,6 +1,7 @@
 Adafruit_DHT
 smbus
 smbus2
+adafruit-circuitpython-dht
 adafruit-circuitpython-veml6070
 ephem
 RPi.GPIO
