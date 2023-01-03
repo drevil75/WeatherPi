@@ -150,25 +150,28 @@ def readBME280All(addr=DEVICE):
 
   return temperature/100.0,pressure/100.0,humidity
 
+def read_bme280():
+  (chip_id, chip_version) = readBME280ID()
+  print("Chip ID     :", chip_id)
+  print("Version     :", chip_version)
 
-(chip_id, chip_version) = readBME280ID()
-print("Chip ID     :", chip_id)
-print("Version     :", chip_version)
+  temperature,pressure,humidity = readBME280All()
 
-temperature,pressure,humidity = readBME280All()
+  print("Temperature : ", round(temperature,2), "C")
+  print("Pressure : ", round(pressure), "hPa")
+  print("Humidity : ", round(humidity,2), "%")
 
-print("Temperature : ", round(temperature,2), "C")
-print("Pressure : ", round(pressure), "hPa")
-print("Humidity : ", round(humidity,2), "%")
+  ts = getInflxTimestamp()
+  write2influxapi(f'bme280,type=air temperature={temperature},humidity={humidity},pressure={pressure} {ts}')
 
-ts = getInflxTimestamp()
-write2influxapi(f'bme280,type=air temperature={temperature},humidity={humidity},pressure={pressure} {ts}')
+  ts = getOSMTimestamp()
+  osm_data = [
+    {"sensor": f"{presID}","value": f"{pressure}","createdAt": f"{ts}"}
+  ]
+  postOSMvalues(osm_data)
 
-ts = getOSMTimestamp()
-osm_data = [
-   {"sensor": f"{presID}","value": f"{pressure}","createdAt": f"{ts}"}
-]
-postOSMvalues(osm_data)
+  ts = getOpenhabTimestamp()
+  postOpenhabValues(oh_presID, pressure, ts)
 
-ts = getOpenhabTimestamp()
-postOpenhabValues(oh_presID, pressure, ts)
+if __name__ == "__main__":
+  read_bme280()

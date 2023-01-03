@@ -25,15 +25,21 @@ def readadc(adcnum):
  adcout = ((r[1] &3) <<8)+r[2]
  return adcout
 
-val = ((readadc(AnalogPin) / 1024) * pin_voltage) * 50
 
-ts = getInflxTimestamp()
-write2influxapi(f'dfrobot,type=sound  volume={val} {ts}')
+def read_sound():
+   val = ((readadc(AnalogPin) / 1024) * pin_voltage) * 50
 
-ts = getOSMTimestamp()
-osm_data = [
-   {"sensor": f"{soundID}","value": f"{val}","createdAt": f"{ts}"}
-]
-postOSMvalues(osm_data)
+   ts = getInflxTimestamp()
+   write2influxapi(f'dfrobot,type=sound  volume={val} {ts}')
 
-postOpenhabValues(oh_soundID, val, ts)
+   ts = getOSMTimestamp()
+   osm_data = [
+      {"sensor": f"{soundID}","value": f"{val}","createdAt": f"{ts}"}
+   ]
+   postOSMvalues(osm_data)
+
+   postOpenhabValues(oh_soundID, val, ts)
+
+
+if __name__ == "__main__":
+  read_sound()
