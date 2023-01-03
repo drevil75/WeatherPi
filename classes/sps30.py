@@ -166,7 +166,9 @@ class SPS30:
         self.i2c.write(CMD_START_FAN_CLEANING)
 
     def read_auto_cleaning_interval(self) -> int:
+        sleep(0.5)
         self.i2c.write(CMD_AUTO_CLEANING_INTERVAL)
+        sleep(0.5)
         data = self.i2c.read(NBYTES_AUTO_CLEANING_INTERVAL)
 
         interval = []
@@ -190,6 +192,7 @@ class SPS30:
         data.append(self.crc_calc(data[2:4]))
         data.extend([interval[2], interval[3]])
         data.append(self.crc_calc(data[5:7]))
+        sleep(0.5)
         self.i2c.write(data)
         sleep(0.05)
         return self.read_auto_cleaning_interval()
