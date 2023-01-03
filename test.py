@@ -1,12 +1,10 @@
-import configparser
-# import sendvaluesapi
+import json
 
-config = configparser.ConfigParser()
-config.read('./config.cfg')
+sensorID = 'abc'
+val = 9.6
+ts = '2022-09-29T8'
+payload = {"value": f"{val}", "createdAt": f"{ts}"}
+data = f'{sensorID}, {json.dumps(payload)}'
 
-url2 = config['influxdb']['url2']
-
-test = 'weather'
-urln = f'{url2}'
-
-print(url2)
+print(payload)
+print(data)

@@ -1,10 +1,18 @@
 import RPi.GPIO as GPIO
 import spidev
 from time import sleep
+from apis.send2influxapi import *
+from apis.send2opensensemap import *
+from apis.send2openhab import *
+
+config = configparser.ConfigParser()
+config.read('./config.cfg')
+AnalogPin = int(config['sound']['sensorpin'])
+pin_voltage = float(config['sound']['pin_voltage'])
 
 # Initialisierung der Analogen Pins
-A0,A1,A2,A3,A4,A5,A6,A7 = 0,1,2,3,4,5,6,7
-pin_voltage = 3.3
+# A0,A1,A2,A3,A4,A5,A6,A7 = 0,1,2,3,4,5,6,7
+# pin_voltage = 3.3
 
 # SPI-Einstellungen
 spi = spidev.SpiDev()
@@ -17,26 +25,14 @@ def readadc(adcnum):
  adcout = ((r[1] &3) <<8)+r[2]
  return adcout
 
-while True:
-    # Einlese der Analogen Werte und kopie in eine andere Variable
-    a = ((readadc(A0) / 1024) * pin_voltage) * 50
-    # b = readadc(A1)
-    # c = readadc(A2)
-    # d = readadc(A3)
-    # e = readadc(A4)
-    # f = readadc(A5)
-    # g = readadc(A6)
-    # h = readadc(A7)
+val = ((readadc(AnalogPin) / 1024) * pin_voltage) * 50
 
-    # Ausgabe der Analogen Werte
-    print("Channel A0: " + str(a))
-    # print("Channel A1: " + str(b))
-    # print("Channel A2: " + str(c))
-    # print("Channel A3: " + str(d))
-    # print("Channel A4: " + str(e))
-    # print("Channel A5: " + str(f))
-    # print("Channel A6: " + str(g))
-    # print("Channel A7: " + str(h))
-    #print "_______________________________________\n"
-    sleep(0.5)
+ts = getInflxTimestamp()
+write2influxapi(f'sound,sensor_id=DFRobot volume={val} {ts}')
 
+ts = getOSMTimestamp()
+postOSMvalues(soundID, val, ts)
+
+postOpenhabValues(oh_soundID, val, ts)
+
+print("Channel A0: " + str(val))

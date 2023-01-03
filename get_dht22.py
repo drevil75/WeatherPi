@@ -6,6 +6,8 @@ import RPi.GPIO as GPIO
 import configparser
 import datetime, time
 from apis.send2influxapi import *
+from apis.send2opensensemap import *
+from apis.send2openhab import *
 
 config = configparser.ConfigParser()
 cfgFile = './config.cfg'
@@ -32,6 +34,10 @@ if type(humi) is not float:
     humi = 0.0
 
 ts = getInflxTimestamp()
-data = f'air,sensor_id=DHT22 temperature={temp},humidity={humi} {ts}'
+write2influxapi(f'air,sensor_id=DHT22 temperature={temp},humidity={humi} {ts}')
+ts = getOSMTimestamp()
+postOSMvalues(tempID, temp, ts)
+postOSMvalues(humiID, humi, ts)
 
-write2influxapi(data)
+postOpenhabValues(oh_tempID, temp, ts)
+postOpenhabValues(oh_humiID, humi, ts)

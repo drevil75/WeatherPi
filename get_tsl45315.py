@@ -2,7 +2,9 @@
 
 import smbus
 import time
-import sendvaluesapi
+from apis.send2influxapi import *
+from apis.send2opensensemap import *
+from apis.send2openhab import *
 
 # Get I2C bus
 
@@ -41,4 +43,10 @@ luminance = data[1] * 256 + data[0]
 # Output data to screen
 
 print("Ambient Light Luminance : %d lux" %luminance)
-sendvaluesapi.write2api('luminance', luminance)
+ts = getInflxTimestamp()
+write2influxapi(f'light,sensor_id=tsl45315 luminance={luminance} {ts}')
+
+ts = getOSMTimestamp()
+postOSMvalues(brightID, luminance, ts)
+
+postOpenhabValues(oh_brightID, luminance, ts)

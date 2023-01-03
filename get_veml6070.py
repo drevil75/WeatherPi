@@ -9,8 +9,9 @@
 import time
 import board
 import adafruit_veml6070
-import sendvaluesapi
-
+from apis.send2influxapi import *
+from apis.send2opensensemap import *
+from apis.send2openhab import *
 
 with board.I2C() as i2c:
     uv = adafruit_veml6070.VEML6070(i2c)
@@ -26,4 +27,10 @@ with board.I2C() as i2c:
         time.sleep(1)
 
     print(f"UV: {uv_raw}")
-    sendvaluesapi.write2api('uv', uv_raw)
+    ts = getInflxTimestamp()
+    write2influxapi(f'light,sensor_id=veml6070 uv={uv_raw},uv_risk_level={risk_level} {ts}')
+
+    ts = getOSMTimestamp()
+    postOSMvalues(uvID, uv_raw, ts)
+
+    postOpenhabValues(oh_uvID, uv_raw, ts)

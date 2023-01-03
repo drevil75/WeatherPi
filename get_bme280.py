@@ -10,16 +10,16 @@
 #--------------------------------------
 
 import smbus
-import time
-import sendvaluesapi
+import datetime, time
+from apis.send2influxapi import *
+from apis.send2opensensemap import *
+from apis.send2openhab import *
 
 from ctypes import c_short
 from ctypes import c_byte
 from ctypes import c_ubyte
 
-
 DEVICE = 0x76 # Default device I2C address
-
 
 bus = smbus.SMBus(1) # Rev 2 Pi, Pi 2 & Pi 3 uses bus 1
                      # Rev 1 Pi uses bus 0
@@ -150,22 +150,24 @@ def readBME280All(addr=DEVICE):
 
   return temperature/100.0,pressure/100.0,humidity
 
-def main():
 
-  (chip_id, chip_version) = readBME280ID()
-  print("Chip ID     :", chip_id)
-  print("Version     :", chip_version)
+(chip_id, chip_version) = readBME280ID()
+print("Chip ID     :", chip_id)
+print("Version     :", chip_version)
 
-  temperature,pressure,humidity = readBME280All()
+temperature,pressure,humidity = readBME280All()
 
-  print("Temperature : ", round(temperature,2), "C")
-  print("Pressure : ", round(pressure), "hPa")
-  print("Humidity : ", round(humidity,2), "%")
+print("Temperature : ", round(temperature,2), "C")
+print("Pressure : ", round(pressure), "hPa")
+print("Humidity : ", round(humidity,2), "%")
 
-  sendvaluesapi.write2api('pressure.air', pressure)
-  sendvaluesapi.write2api('temperature.bme280', temperature)
-  sendvaluesapi.write2api('humidity.bme280', humidity)
+ts = getInflxTimestamp()
+write2influxapi(f'air,sensor_id=bme280 temperature={temperature},humidity={humidity},pressure={pressure} {ts}')
 
+ts = getOSMTimestamp()
+postOSMvalues(presID, pressure, ts)
 
-if __name__=="__main__":
-   main()
+ts = getOpenhabTimestamp()
+postOpenhabValues()
+
+postOpenhabValues(oh_presID, pressure, ts)

@@ -1,7 +1,8 @@
 #pip install influxdb-client
-import configparser
+
 import datetime
 import requests, json
+import configparser
 from dotenv import dotenv_values
 
 env = dotenv_values()  # alternative dotenv_values("../pathto/myown.env") , .env is default
@@ -14,8 +15,8 @@ config.read('./config.cfg')
 url = config['influxdb']['url']
 org = config['influxdb']['org']
 bucket = config['influxdb']['bucket']
+cachefile = config['influxdb']['cachefile']
 
-cachefile = './cache.csv' #config['default']['cachefile']
 headers = {'Authorization': f'Token {INFLUXDB_TOKEN}','Content-Type': 'text/plain; charset=utf-8','Accept': 'application/json'}
 status = 0
 
