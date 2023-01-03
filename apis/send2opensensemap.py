@@ -49,7 +49,7 @@ def postOSMvalues(payload):
 
    # try:
    #    # r = requests.post(url, headers=headers, data=payload, timeout=10)
-   r = requests.post(url, headers=headers, json=payload, timeout=10)
+   r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=10)
    print(r)
    #    if r.status_code in [200, 201, 202, 203, 204]:
    #       err_code = 1
