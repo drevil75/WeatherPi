@@ -34,6 +34,7 @@ if type(humi) is not float:
     humi = 0.0
 
 ts = getInflxTimestamp()
+print(ts)
 write2influxapi(f'air,sensor_id=DHT22 temperature={temp},humidity={humi} {ts}')
 
 ts = getOSMTimestamp()

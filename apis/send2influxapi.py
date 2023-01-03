@@ -23,7 +23,7 @@ status = 0
 
 def getInflxTimestamp(): # returns unix timestamp
    now = datetime.datetime.now(datetime.timezone.utc)
-   ts = time.mktime(now.timetuple())
+   ts = int(time.mktime(now.timetuple()))
    return ts
 
 def write2influxapi(data):
