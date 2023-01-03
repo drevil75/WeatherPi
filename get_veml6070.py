@@ -15,6 +15,7 @@ from apis.send2openhab import *
 
 
 def read_veml6070():
+    print('---------read_veml6070--------')
     with board.I2C() as i2c:
         uv = adafruit_veml6070.VEML6070(i2c)
         # Alternative constructors with parameters

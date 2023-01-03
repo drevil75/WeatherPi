@@ -7,6 +7,7 @@ from apis.send2opensensemap import *
 from apis.send2openhab import *
 
 def read_tsl45315():
+   print('---------read_tsl45315--------')
    # Get I2C bus
 
    bus = smbus.SMBus(1)

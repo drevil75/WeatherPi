@@ -27,6 +27,7 @@ def readadc(adcnum):
 
 
 def read_sound():
+   print('---------read_sound--------')
    val = ((readadc(AnalogPin) / 1024) * pin_voltage) * 50
 
    ts = getInflxTimestamp()

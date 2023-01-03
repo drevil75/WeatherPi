@@ -8,6 +8,7 @@ from apis.send2openhab import *
 
 
 def read_sps30():
+    print('---------read_sps30--------')
     pm_sensor = SPS30()
     print(f"Firmware version: {pm_sensor.firmware_version()}")
     print(f"Product type: {pm_sensor.product_type()}")

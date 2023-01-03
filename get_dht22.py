@@ -21,6 +21,7 @@ GPIO.setmode(GPIO.BCM)
 
 
 def read_dht22():
+    print('---------read_dht22--------')
     # Sensortype DHT11=11, DHT22=22
     for i in range(5):
         humi, temp = Adafruit_DHT.read_retry(sensortype, sensorpin)
