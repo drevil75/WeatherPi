@@ -7,7 +7,7 @@ OpenSenseMap_TOKEN = env['OpenSenseMap_TOKEN']
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
-url = config['opensensemap']['url']
+osm_url = config['opensensemap']['url']
 cachefile = config['opensensemap']['cachefile']
 senseBoxID = config['opensensemap']['senseBoxID']
 tempID = config['opensensemap']['tempID']
@@ -40,12 +40,14 @@ def getOSMTimestamp():
 
 
 def postOSMvalues(sensorID, val, ts):
-   url = url + f'{senseBoxID}/{sensorID}'
+   print('-------postOSMvalues-------')
+
+   url = osm_url + f'{senseBoxID}/{sensorID}'
+   payload = {"value": f"{val}", "createdAt": f"{ts}"}
    headers = {'Authorization': f'{OpenSenseMap_TOKEN}', 'Content-Type': 'application/json'}
 
-   payload = {"value": f"{val}", "createdAt": f"{ts}"}
-
-   data = f'{sensorID}, {json.dumps(payload)}'
+   print(url, payload)
+   
    
    try:
          r = requests.post(url, headers=headers, data=payload, timeout=10)
@@ -58,6 +60,7 @@ def postOSMvalues(sensorID, val, ts):
          err_code = 'timeout'
       
    if err_code != 1:
+      data = f'{sensorID}, {json.dumps(payload)}'
       f = open(cachefile, mode='a', encoding='utf-8')
       f.write(f'{data}\n')
       f.close()
