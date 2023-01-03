@@ -28,7 +28,7 @@ with board.I2C() as i2c:
 
     print(f"UV: {uv_raw}")
     ts = getInflxTimestamp()
-    write2influxapi(f'light,sensor_id=veml6070 uv={uv_raw} {ts}')
+    write2influxapi(f'veml6070,type=uv uv={uv_raw} {ts}')
 
     ts = getOSMTimestamp()
     postOSMvalues(uvID, uv_raw, ts)

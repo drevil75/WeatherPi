@@ -58,8 +58,8 @@ def postOSMvalues(payload):
    except:
          err_code = 'timeout'
       
-   # if err_code != 1:
-   #    # data = f'{sensorID}, {payload}'
-   #    f = open(cachefile, mode='a', encoding='utf-8')
-   #    f.write(f'{json.dumps(payload)}\n')
-   #    f.close()
+   if err_code != 1:
+      # data = f'{sensorID}, {payload}'
+      f = open(cachefile, mode='a', encoding='utf-8')
+      f.write(f'{json.dumps(payload)}\n')
+      f.close()

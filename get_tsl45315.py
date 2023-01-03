@@ -44,9 +44,12 @@ luminance = data[1] * 256 + data[0]
 
 print("Ambient Light Luminance : %d lux" %luminance)
 ts = getInflxTimestamp()
-write2influxapi(f'light,sensor_id=tsl45315 luminance={luminance} {ts}')
+write2influxapi(f'tsl45315,type=light luminance={luminance} {ts}')
 
 ts = getOSMTimestamp()
-postOSMvalues(brightID, luminance, ts)
+data = [
+   {"sensor": f"{brightID}","value": f"{luminance}","createdAt": f"{ts}"}
+]
+postOSMvalues(data)
 
 postOpenhabValues(oh_brightID, luminance, ts)

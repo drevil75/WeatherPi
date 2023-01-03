@@ -42,15 +42,11 @@ print(dense_pm1, dense_pm10, dense_pm25, dense_pm4)
 print(c_pm05, c_pm1, c_pm10, c_pm25, c_pm4)
 
 ts = getInflxTimestamp()
-data = f'particular_matter,sensor_id=sps30 dense_pm1={dense_pm1},dense_pm25={dense_pm25},dense_pm4={dense_pm4},dense_pm10={dense_pm10},cnt_particals_pm05={c_pm05},cnt_particals_pm1={c_pm1},cnt_particals_pm25={c_pm25},cnt_particals_pm4={c_pm4},cnt_particals_pm10={c_pm10} {ts}'
+data = f'sps30,type=particular_matter dense_pm1={dense_pm1},dense_pm25={dense_pm25},dense_pm4={dense_pm4},dense_pm10={dense_pm10},cnt_particals_pm05={c_pm05},cnt_particals_pm1={c_pm1},cnt_particals_pm25={c_pm25},cnt_particals_pm4={c_pm4},cnt_particals_pm10={c_pm10} {ts}'
 
 write2influxapi(data)
 
 ts = getOSMTimestamp()
-# postOSMvalues(dense_pm1_ID, dense_pm1, ts)
-# postOSMvalues(dense_pm4_ID, dense_pm4, ts)
-# postOSMvalues(dense_pm10_ID, dense_pm10, ts)
-# postOSMvalues(dense_pm25_ID, dense_pm25, ts)
 
 # send a bunch of data to OSM (prevents response 429 too many requests)
 osm_data = [
@@ -71,7 +67,6 @@ postOpenhabValues(oh_dense_pm1_ID, dense_pm1, ts)
 postOpenhabValues(oh_dense_pm4_ID, dense_pm4, ts)
 postOpenhabValues(oh_dense_pm10_ID, dense_pm10, ts)
 postOpenhabValues(oh_dense_pm25_ID, dense_pm25, ts)
-
 postOpenhabValues(oh_count_partical_pm05_ID, c_pm05, ts)
 postOpenhabValues(oh_count_partical_pm1_ID, c_pm1, ts)
 postOpenhabValues(oh_count_partical_pm4_ID, c_pm4, ts)

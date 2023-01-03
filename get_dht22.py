@@ -35,11 +35,14 @@ if type(humi) is not float:
 
 ts = getInflxTimestamp()
 print(ts)
-write2influxapi(f'air,sensor_id=DHT22 temperature={temp},humidity={humi} {ts}')
+write2influxapi(f'dht22,type=air  temperature={temp},humidity={humi} {ts}')
 
 ts = getOSMTimestamp()
-postOSMvalues(tempID, temp, ts)
-postOSMvalues(humiID, humi, ts)
+data = [
+   {"sensor": f"{tempID}","value": f"{temp}","createdAt": f"{ts}"},
+   {"sensor": f"{humiID}","value": f"{humi}","createdAt": f"{ts}"}
+]
+postOSMvalues(data)
 
 postOpenhabValues(oh_tempID, temp, ts)
 postOpenhabValues(oh_humiID, humi, ts)

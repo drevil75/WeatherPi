@@ -28,10 +28,13 @@ def readadc(adcnum):
 val = ((readadc(AnalogPin) / 1024) * pin_voltage) * 50
 
 ts = getInflxTimestamp()
-write2influxapi(f'sound,sensor_id=DFRobot volume={val} {ts}')
+write2influxapi(f'dfrobot,type=sound  volume={val} {ts}')
 
 ts = getOSMTimestamp()
-postOSMvalues(soundID, val, ts)
+data = [
+   {"sensor": f"{soundID}","value": f"{val}","createdAt": f"{ts}"}
+]
+postOSMvalues(data)
 
 postOpenhabValues(oh_soundID, val, ts)
 

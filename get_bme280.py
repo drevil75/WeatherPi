@@ -162,10 +162,13 @@ print("Pressure : ", round(pressure), "hPa")
 print("Humidity : ", round(humidity,2), "%")
 
 ts = getInflxTimestamp()
-write2influxapi(f'air,sensor_id=bme280 temperature={temperature},humidity={humidity},pressure={pressure} {ts}')
+write2influxapi(f'bme280,type=air temperature={temperature},humidity={humidity},pressure={pressure} {ts}')
 
 ts = getOSMTimestamp()
-postOSMvalues(presID, pressure, ts)
+data = [
+   {"sensor": f"{presID}","value": f"{pressure}","createdAt": f"{ts}"}
+]
+postOSMvalues(data)
 
 ts = getOpenhabTimestamp()
 postOpenhabValues()
