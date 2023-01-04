@@ -15,7 +15,7 @@ config.read('./config.cfg')
 url = config['influxdb']['url']
 org = config['influxdb']['org']
 bucket = config['influxdb']['bucket']
-cachefile = config['influxdb']['cachefile']
+cachefile = config['default']['cachedir'] + config['influxdb']['cachefile']
 
 headers = {'Authorization': f'Token {INFLUXDB_TOKEN}','Content-Type': 'text/plain; charset=utf-8','Accept': 'application/json'}
 status = 0

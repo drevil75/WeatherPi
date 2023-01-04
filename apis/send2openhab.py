@@ -5,7 +5,7 @@ import configparser
 config = configparser.ConfigParser()
 config.read('./config.cfg')
 host = config['openhab']['host']
-cachefile = config['openhab']['cachefile']
+cachefile = config['default']['cachedir'] + config['openhab']['cachefile']
 oh_tempID = config['openhab']['tempID']
 oh_humiID = config['openhab']['humiID']
 oh_presID = config['openhab']['presID']

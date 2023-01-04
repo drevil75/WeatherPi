@@ -8,7 +8,7 @@ OpenSenseMap_TOKEN = env['OpenSenseMap_TOKEN']
 config = configparser.ConfigParser()
 config.read('./config.cfg')
 osm_url = config['opensensemap']['url']
-cachefile = config['opensensemap']['cachefile']
+cachefile = config['default']['cachedir'] + config['opensensemap']['cachefile']
 senseBoxID = config['opensensemap']['senseBoxID']
 tempID = config['opensensemap']['tempID']
 humiID = config['opensensemap']['humiID']
