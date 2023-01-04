@@ -18,8 +18,8 @@ t = 0
 
 # GPIO initialisieren
 GPIO.setmode(GPIO.BCM)
-# GPIO.setup(pin_rain, GPIO.IN) # Pin 11
-# GPIO.setup(pin_wind, GPIO.IN) # Pin 12
+GPIO.setup(pin_rain, GPIO.IN) # Pin 11
+GPIO.setup(pin_wind, GPIO.IN) # Pin 12
 
 # internen Pullup-Widerstand aktivieren.
 GPIO.setup(pin_rain, GPIO.IN, pull_up_down = GPIO.PUD_UP)
@@ -69,7 +69,7 @@ try:
       Counter_Rain = 0
       Counter_Wind = 0
       t = 0
-      time.sleep(1)
+    time.sleep(1)
 
 except KeyboardInterrupt:
   GPIO.cleanup()
