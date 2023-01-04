@@ -3,36 +3,38 @@ import RPi.GPIO as GPIO
 import time
 
 # GPIO-Ports
-Counter_17 = 0
-Counter_18 = 0
+Counter_Rain = 0
+Counter_Wind = 0
+pin_rain = 19
+pin_wind = 20
 
 # Zaehlvariable
 Tic = 0
 
 # GPIO initialisieren
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.IN) # Pin 11
-GPIO.setup(18, GPIO.IN) # Pin 12
+GPIO.setup(pin_rain, GPIO.IN) # Pin 11
+GPIO.setup(pin_wind, GPIO.IN) # Pin 12
 
 # internen Pullup-Widerstand aktivieren.
-GPIO.setup(17, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-GPIO.setup(18, GPIO.IN, pull_up_down = GPIO.PUD_UP)  
+GPIO.setup(pin_rain, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(pin_wind, GPIO.IN, pull_up_down = GPIO.PUD_UP)  
 
 # Callback fuer GPIO 17
-def isr17(channel):  
-    global Counter_17
-    Counter_17 = Counter_17 + 1
-    print("Counter_17: %d" % Counter_17)
+def isr_rain(channel):  
+    global Counter_Rain
+    Counter_Rain += 1
+    print("Counter_Rain: %d" % Counter_Rain)
 
 # Callback fuer GPIO 18
-def isr18(channel):  
-    global Counter_18
-    Counter_18 = Counter_18 + 1
-    print("Counter_18: %d" % Counter_18)
+def isr_wind(channel):  
+    global Counter_Wind
+    Counter_Wind += 1
+    print("Counter_Wind: %d" % Counter_Wind)
 
 # Interrupts aktivieren
-GPIO.add_event_detect(17, GPIO.FALLING, callback = isr17, bouncetime = 200) 
-GPIO.add_event_detect(18, GPIO.FALLING, callback = isr18, bouncetime = 200) 
+GPIO.add_event_detect(pin_rain, GPIO.FALLING, callback = isr_rain, bouncetime = 200) 
+GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = 200) 
 
 # Endlosschleife wie oben
 try:
