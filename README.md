@@ -97,8 +97,13 @@ cd ~
 git clone https://github.com/drevil75/WeatherPi.git
 cd WeatherPi
 
+
 # edit the config with your IDs, PINs, Names...
 nano config.cfg
+
+# edit the .env file with your credentials
+mv env.template .env
+nano .env
 
 # start the single scripts i.e.
 python3 get_dht22.py
