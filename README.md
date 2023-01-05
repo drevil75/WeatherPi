@@ -34,7 +34,7 @@ use RaspiImager
 - pw: ...
 - WIFI: your wifi credentials
 
-- reduce all write access to an absolute minimum to extend the microSD to the maximum - disable logging for that purpose
+- reduce all write access to an absolute minimum to extend the lifetime of the microSD to a maximum - disable logging for that purpose
 
 ````shell
 sudo systemctl disable rsyslog
