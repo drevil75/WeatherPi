@@ -9,6 +9,8 @@ But i'm not really satisfied with the arduino solution.
 
 Now is the time to migrate the SenseBox to an Raspberry.
 
+![Weather Station](/docs/ws.jpeg "Weather Station")
+
 ## Sensors
 
 ### Digital
