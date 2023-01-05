@@ -29,10 +29,10 @@ Now is the time to migrate the SenseBox to an Raspberry.
 
 ## setup
 use RaspiImager
-hostname: weatherpi
-user: weather
-pw: ...
-WIFI: your wifi credentials
+- hostname: weatherpi
+- user: weather
+- pw: ...
+- WIFI: your wifi credentials
 
 - reduce all write access to an absolute minimum to extend the microSD to the maximum - disable logging for that purpose
 
