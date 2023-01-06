@@ -25,15 +25,16 @@ def readadc(adcnum):
  adcout = ((r[1] &3) <<8)+r[2]
  return adcout
 
-co_pin = 0
-nh2_pin = 1
-nh3_pin = 6
+co_pin = 6
+nh2_pin = 0
+nh3_pin = 1
 
 def read_sound():
    print('---------read_sound--------')
-   print(((readadc(AnalogPin) / 1024) * pin_voltage))
-   print(((readadc(AnalogPin) / 1024) * pin_voltage))
-   print(((readadc(AnalogPin) / 1024) * pin_voltage))
+   print(((readadc(co_pin) / 1024) * pin_voltage))
+   print(((readadc(nh2_pin) / 1024) * pin_voltage))
+   print(((readadc(nh3_pin) / 1024) * pin_voltage))
+
 
    # ts = getInflxTimestamp()
    # write2influxapi(f'dfrobot,type=sound  volume={val} {ts}')

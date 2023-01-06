@@ -43,7 +43,7 @@ sudo systemctl disable rsyslog
 sudo systemctl stop rsyslog
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install python3-pip fail2ban ntpdate git libgpiod2
+sudo apt install python3-pip fail2ban ntpdate git libgpiod2 -y
 
 pip3 install --upgrade setuptools
 sudo pip3 install --upgrade setuptools
@@ -93,9 +93,7 @@ print("done!")
 ````
 
 ````shell
-cd ~
-git clone https://github.com/drevil75/WeatherPi.git
-cd WeatherPi
+cd ~ && git clone https://github.com/drevil75/WeatherPi.git && cd WeatherPi
 
 
 # edit the config with your IDs, PINs, Names...
