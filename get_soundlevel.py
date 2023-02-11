@@ -25,10 +25,36 @@ def readadc(adcnum):
  adcout = ((r[1] &3) <<8)+r[2]
  return adcout
 
+def mapRange(vmin, vmax, steps):
+
+    step = (vmax - vmin) / (steps - 1) # steps - 1 because vmin is fixed the first value
+    vals = [0,vmin]
+    for i in range(1023): # begin with 0
+        vmin += step
+        vals.append(vmin)
+
+    print(len(vals), min(vals), max(vals))
+    return vals
+
 
 def read_sound():
    print('---------read_sound--------')
-   val = ((readadc(AnalogPin) / 1024) * pin_voltage) * 50
+   # Mappingliste für Sound-Level-Meter erstellen - Range 20-130dBA
+   map = mapRange(vmin=20, vmax=130, steps=1024)
+   
+   # first messurement
+   readadc(AnalogPin)
+   time.sleep(2)
+   # second messurement
+   soundPinVal = readadc(AnalogPin)
+   
+   if type(soundPinVal) == int:
+      if soundPinVal in range(0,1023):
+         val = map[soundPinVal]
+      else:
+         val = 0
+   else:
+      val = 0
 
    ts = getInflxTimestamp()
    write2influxapi(f'dfrobot,type=sound  volume={val} {ts}')

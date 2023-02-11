@@ -1,7 +1,7 @@
 import time
 from get_bme280 import *
 from get_dht22 import *
-from get_sound import *
+from get_soundlevel import *
 from get_sps30 import *
 from get_tsl45315 import *
 from get_veml6070 import *

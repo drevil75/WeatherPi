@@ -29,6 +29,11 @@ brightID = config['opensensemap']['brightID']
 uvID = config['opensensemap']['uvID']
 rainID = config['opensensemap']['rainID']
 soundID = config['opensensemap']['soundID']
+co2ID = config['opensensemap']['co2ID']
+coID = config['opensensemap']['coID']
+nh3ID = config['opensensemap']['nh3ID']
+no2ID = config['opensensemap']['no2ID']
+o3ID = config['opensensemap']['o3ID']
 
 
 def getOSMTimestamp():
