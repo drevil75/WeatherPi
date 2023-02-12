@@ -9,8 +9,6 @@ pin_wind = 4
 bouncetime = 30
 messungspeed = '50'
 
-f = open(f'messung{messungspeed}.txt', mode='w', encoding='utf-8')
-f.write(f'messungspeed={messungspeed}-------')
 
 
 # Zaehlvariable
@@ -34,7 +32,12 @@ GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = 
 
 # Endlosschleife wie oben
 try:
+    f = open(f'messung{messungspeed}.txt', mode='a', encoding='utf-8')
+    f.write(f'messungspeed={messungspeed}-------')
+
     while True:
+        if t == 0:
+            
         # nix Sinnvolles tun
         t += 1
         # print(f"time {t}")
@@ -62,6 +65,7 @@ try:
         if t == 60:
             print(f't60 ---------- {Counter_Wind}')
             f.write(f't60={Counter_Wind}')
+            
 
             if Counter_Wind > 0:
                 windspeed = (Counter_Wind / 2) / 60.0 * 2.4 # Counter / 60 Seconds * 2.4m/s
@@ -73,6 +77,6 @@ try:
 
 
 except KeyboardInterrupt:
-    f.close
+    f.close()
     GPIO.cleanup()
 
