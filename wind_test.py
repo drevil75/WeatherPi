@@ -9,7 +9,7 @@ pin_wind = 4
 bouncetime = 30
 messungspeed = '50'
 
-f = open('messung.txt', mode='a', encoding='utf-8')
+f = open(f'messung{messungspeed}.txt', mode='w', encoding='utf-8')
 f.write(f'messungspeed={messungspeed}-------')
 
 
@@ -41,6 +41,7 @@ try:
         if t == 10:
             print(f't10 ---------- {Counter_Wind}')
             f.write(f't10={Counter_Wind}')
+            
 
         if t == 20:
             print(f't20 ---------- {Counter_Wind}')
