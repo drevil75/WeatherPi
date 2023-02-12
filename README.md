@@ -45,6 +45,9 @@ sudo systemctl stop rsyslog
 sudo apt update && sudo apt upgrade -y
 sudo apt install python3-pip fail2ban ntpdate git libgpiod2 -y
 
+pip3 install -r setup/requirements.txt
+
+
 pip3 install --upgrade setuptools
 sudo pip3 install --upgrade setuptools
 
