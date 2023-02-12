@@ -47,12 +47,10 @@ sudo apt install python3-pip fail2ban ntpdate git libgpiod2 -y
 
 pip3 install -r setup/requirements.txt
 
-
 pip3 install --upgrade setuptools
-sudo pip3 install --upgrade setuptools
+sudo pip3 install --upgrade setuptools adafruit-python-shell
 
 cd ~
-sudo pip3 install --upgrade adafruit-python-shell
 wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
 sudo python3 raspi-blinka.py
 
