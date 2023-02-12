@@ -33,38 +33,36 @@ GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = 
 # Endlosschleife wie oben
 try:
     f = open(f'messung{messungspeed}.txt', mode='a', encoding='utf-8')
-    f.write(f'messungspeed={messungspeed}-------')
+    f.write(f'messungspeed={messungspeed}-------\n')
 
     while True:
-        if t == 0:
-            
+
         # nix Sinnvolles tun
         t += 1
         # print(f"time {t}")
         if t == 10:
             print(f't10 ---------- {Counter_Wind}')
-            f.write(f't10={Counter_Wind}')
+            f.write(f't10={Counter_Wind}\n')
             
-
         if t == 20:
             print(f't20 ---------- {Counter_Wind}')
-            f.write(f't20={Counter_Wind}')
+            f.write(f't20={Counter_Wind}\n')
 
         if t == 30:
             print(f't30 ---------- {Counter_Wind}')
-            f.write(f't30={Counter_Wind}')
+            f.write(f't30={Counter_Wind}\n')
 
         if t == 40:
             print(f't40 ---------- {Counter_Wind}')
-            f.write(f't40={Counter_Wind}')
+            f.write(f't40={Counter_Wind}\n')
 
         if t == 50:
             print(f't50 ---------- {Counter_Wind}')
-            f.write(f't50={Counter_Wind}')
+            f.write(f't50={Counter_Wind}\n')
 
         if t == 60:
             print(f't60 ---------- {Counter_Wind}')
-            f.write(f't60={Counter_Wind}')
+            f.write(f't60={Counter_Wind}\n')
             
 
             if Counter_Wind > 0:
