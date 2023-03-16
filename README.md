@@ -39,27 +39,39 @@ use RaspiImager
 - reduce all write access to an absolute minimum to extend the lifetime of the microSD to a maximum - disable logging for that purpose
 
 ````shell
-sudo systemctl disable rsyslog
-sudo systemctl stop rsyslog
+# sudo systemctl disable rsyslog
+# sudo systemctl stop rsyslog
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install python3-pip fail2ban ntpdate git libgpiod2 -y
+sudo apt install --upgrade python3-pip fail2ban ntpdate git libgpiod2 -y
+
+cd ~ && git clone https://github.com/drevil75/WeatherPi.git && cd WeatherPi
 
 pip3 install -r setup/requirements.txt
 
 pip3 install --upgrade setuptools
 sudo pip3 install --upgrade setuptools adafruit-python-shell
 
-cd ~
-wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
+cd ~ && wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
 sudo python3 raspi-blinka.py
 
 # create a ramdisk for cache files
 sudo mkdir /mnt/ramdisk
 sudo nano /etc/fstab
 
-tmpfs /mnt/ramdisk tmpfs nodev,nosuid,size=20M 0 0
+# ramdisk
+tmpfs /mnt/ramdisk tmpfs nodev,nosuid,size=64M 0 0
+# deactivate logging of last file access
+/dev/mmcblk0p2 / ext4 defaults,nodiratime,noatime 0 1
+# forward logfiles to ramdisk
+none /var/log tmpfs size=5M,noatime 0
+
 sudo mount -a
+
+# deactivate swapping
+sudo dphys-swapfile swapoff
+sudo systemctl disable dphys-swapfile
+sudo apt-get purge dphys-swapfile
 # ------------
 ````
 
@@ -94,8 +106,6 @@ print("done!")
 ````
 
 ````shell
-cd ~ && git clone https://github.com/drevil75/WeatherPi.git && cd WeatherPi
-
 
 # edit the config with your IDs, PINs, Names...
 nano config.cfg

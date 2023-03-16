@@ -7,9 +7,9 @@ from apis.send2openhab import *
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
-AnalogPinTemp = int(config['sht50']['sensorpintemp'])
-AnalogPinHumi = int(config['sht50']['sensorpinhumi'])
-pin_voltage = float(config['sht50']['pin_voltage'])
+AnalogPinTemp = int(config['smt50']['sensorpintemp'])
+AnalogPinHumi = int(config['smt50']['sensorpinhumi'])
+pin_voltage = float(config['smt50']['pin_voltage'])
 
 # Initialisierung der Analogen Pins
 # A0,A1,A2,A3,A4,A5,A6,A7 = 0,1,2,3,4,5,6,7
@@ -27,13 +27,13 @@ def readadc(pin):
  return adcout
 
 
-def read_sound():
+def read_smt50():
    print('---------read_sound--------')
    voltage = readadc(AnalogPinTemp) * (pin_voltage / 1024.0)
-   soilTemperature = (voltage - 0.5) * 100
+   soilTemperature = (voltage - 0.48) * 100
 
    voltage = readadc(AnalogPinHumi) * (pin_voltage / 1024.0)
-   soilMoisture = (voltage * 100) / 3
+   soilMoisture = (voltage * 100) / 2.99
 
    ts = getInflxTimestamp()
    write2influxapi(f'sht50,type=soil  temperature={soilTemperature},humidity={soilMoisture} {ts}')
@@ -50,4 +50,5 @@ def read_sound():
 
 
 if __name__ == "__main__":
-  read_sound()
+  read_smt50()
+

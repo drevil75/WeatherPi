@@ -12,8 +12,9 @@ config = configparser.ConfigParser()
 cfgFile = './config.cfg'
 config.read(cfgFile)
 sections = config.sections()
+dht22_pin = eval('board.D' + config['dht22']['sensorpin'])
 
-dhtDevice = adafruit_dht.DHT22(board.D27)
+dhtDevice = adafruit_dht.DHT22(dht22_pin)
 
 def read_dht22():
     print('---------read_dht22--------')
