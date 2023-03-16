@@ -2,11 +2,11 @@
 import board
 import adafruit_dht
 import RPi.GPIO as GPIO
-import configparser
 import datetime, time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+import configparser
 
 config = configparser.ConfigParser()
 cfgFile = './config.cfg'
@@ -14,6 +14,7 @@ config.read(cfgFile)
 sections = config.sections()
 dht22_pin = eval('board.D' + config['dht22']['sensorpin'])
 
+GPIO.setup(dht22_pin, GPIO.IN) 
 dhtDevice = adafruit_dht.DHT22(dht22_pin)
 
 def read_dht22():
