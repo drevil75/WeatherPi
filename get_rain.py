@@ -35,7 +35,7 @@ def isr_rain(channel):
     print("Counter_Rain: %d" % Counter_Rain)
 
 # Interrupts aktivieren
-GPIO.add_event_detect(pin_rain, GPIO.FALLING, callback = isr_rain, bouncetime = 50) 
+GPIO.add_event_detect(pin_rain, GPIO.RISING, callback = isr_rain, bouncetime = 500) 
 
 # Endlosschleife wie oben
 try:
