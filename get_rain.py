@@ -4,10 +4,16 @@ import time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+import configparser
+
+config = configparser.ConfigParser()
+cfgFile = './config.cfg'
+config.read(cfgFile)
+sections = config.sections()
+pin_rain = int(config['rain']['sensorpin'])
 
 # GPIO-Ports
 Counter_Rain = 0
-pin_rain = 19
 rainvolume = 0
 volPerKlick = 0.2995357196345664 #0,29... mm Regen pro qm =
 

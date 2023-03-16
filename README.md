@@ -57,6 +57,7 @@ sudo python3 raspi-blinka.py
 
 # create a ramdisk for cache files
 sudo mkdir /mnt/ramdisk
+sudo chmod -R 777 /mnt/ramdisk
 sudo nano /etc/fstab
 
 # ramdisk
@@ -69,9 +70,7 @@ none /var/log tmpfs size=5M,noatime 0
 sudo mount -a
 
 # deactivate swapping
-sudo dphys-swapfile swapoff
-sudo systemctl disable dphys-swapfile
-sudo apt-get purge dphys-swapfile
+sudo dphys-swapfile swapoff %% sudo systemctl disable dphys-swapfile && sudo apt-get purge dphys-swapfile
 # ------------
 ````
 

@@ -4,11 +4,17 @@ import time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+import configparser
+
+config = configparser.ConfigParser()
+cfgFile = './config.cfg'
+config.read(cfgFile)
+sections = config.sections()
+pin_wind = int(config['wind']['sensorpin'])
 
 # GPIO-Ports
 Counter_Wind = 0
 windspeed = 0.0
-pin_wind = 20
 
 # Zaehlvariable
 t = 0
