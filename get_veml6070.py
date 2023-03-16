@@ -1,17 +1,10 @@
-#https://learn.adafruit.com/adafruit-veml6070-uv-light-sensor-breakout/python-circuitpython
-#sudo pip3 install adafruit-circuitpython-veml6070
-
-# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
-# SPDX-License-Identifier: MIT
-
-# VEML6070 Driver Example Code
-
 import time
 import board
 import adafruit_veml6070
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 
 def read_veml6070():
@@ -31,15 +24,16 @@ def read_veml6070():
 
         print(f"UV: {uv_raw}")
         ts = getInflxTimestamp()
-        write2influxapi(f'veml6070,type=uv uv={uv_raw} {ts}')
+        data = f'veml6070,type=uv uv={uv_raw} {ts}'
+        writeBuffer('influx-veml6070', data)
 
         ts = getOSMTimestamp()
         osm_data = [
             {"sensor": f"{uvID}","value": f"{uv_raw}","createdAt": f"{ts}"}
         ]
-        postOSMvalues(osm_data)
+        writeBuffer('osm-veml6070', osm_data)
 
-        postOpenhabValues(oh_uvID, uv_raw, ts)
+        writeBuffer('openhab-veml6070', f'{oh_uvID},{uv_raw},{ts}')
 
 if __name__ == "__main__":
     read_veml6070()        

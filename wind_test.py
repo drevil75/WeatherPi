@@ -5,8 +5,8 @@ import time
 # GPIO-Ports
 Counter_Wind = 0
 windspeed = 0.0
-pin_wind = 4
-bouncetime = 30
+pin_wind = 20
+bouncetime = 50
 messungspeed = '50'
 
 
@@ -28,7 +28,7 @@ def isr_wind(channel):
     print("Counter_Wind: %d" % Counter_Wind)
 
 # Interrupts aktivieren
-GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = bouncetime) 
+GPIO.add_event_detect(pin_wind, GPIO.RISING, callback = isr_wind, bouncetime = bouncetime) 
 
 # Endlosschleife wie oben
 try:
@@ -66,7 +66,7 @@ try:
             
 
             if Counter_Wind > 0:
-                windspeed = (Counter_Wind / 2) / 60.0 * 2.4 # Counter / 60 Seconds * 2.4m/s
+                windspeed = (Counter_Wind) / 60.0 * 2.4 # Counter / 60 Seconds * 2.4m/s
 
             windspeed = 0
             Counter_Wind = 0

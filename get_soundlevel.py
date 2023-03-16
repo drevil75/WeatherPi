@@ -4,6 +4,7 @@ from time import sleep
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
@@ -57,15 +58,16 @@ def read_sound():
       val = 0
 
    ts = getInflxTimestamp()
-   write2influxapi(f'dfrobot,type=sound  volume={val} {ts}')
+   data = f'dfrobot,type=sound  volume={val} {ts}'
+   writeBuffer('influx-sound', data)
 
    ts = getOSMTimestamp()
    osm_data = [
       {"sensor": f"{soundID}","value": f"{val}","createdAt": f"{ts}"}
    ]
-   postOSMvalues(osm_data)
+   writeBuffer('osm-sound', osm_data)
 
-   postOpenhabValues(oh_soundID, val, ts)
+   writeBuffer('openhab-sound', f'{oh_soundID},{val},{ts}')
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ import datetime, time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 config = configparser.ConfigParser()
 cfgFile = './config.cfg'
@@ -25,16 +26,17 @@ def read_scd30():
         time.sleep(2)
 
     ts = getInflxTimestamp()
-    write2influxapi(f'scd30,type=air co2={m[0]},temperature={m[1]},humidity={m[2]} {ts}')
+    data = f'scd30,type=air co2={m[0]},temperature={m[1]},humidity={m[2]} {ts}'
+    writeBuffer('influx-scd30', data)
 
     ts = getOSMTimestamp()
     osm_data = [
         {"sensor": f"{co2ID}","value": f"{m[0]}","createdAt": f"{ts}"}
     ]
-    postOSMvalues(osm_data)
+    writeBuffer('osm-scd30', osm_data)
 
     ts = getOpenhabTimestamp()
-    postOpenhabValues(oh_presID, m[0], ts)
+    writeBuffer('openhab-scd30', f'{oh_presID},{m[0]},{ts}')
 
 if __name__ == "__main__":
     read_scd30()

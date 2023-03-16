@@ -4,6 +4,7 @@ import time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 import configparser
 
 config = configparser.ConfigParser()
@@ -48,14 +49,16 @@ try:
                 rainvolume = Counter_Rain * volPerKlick
 
                 ts = getInflxTimestamp()
-                write2influxapi(f'rain,type=gauge  volume={rainvolume} {ts}')
+                data = f'rain,type=gauge  volume={rainvolume} {ts}'
+                writeBuffer('influx-rain', data)
 
                 ts = getOSMTimestamp()
                 osm_data = [
                     {"sensor": f"{rainID}","value": f"{rainvolume}","createdAt": f"{ts}"}
                 ]
-                postOSMvalues(osm_data)
-                postOpenhabValues(oh_rainID, rainvolume, ts)
+                writeBuffer('osm-rain', osm_data)
+
+                writeBuffer('openhab-rain', f'{oh_rainID},{rainvolume},{ts}')
 
             rainvolume = 0
             Counter_Rain = 0

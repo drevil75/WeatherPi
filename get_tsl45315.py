@@ -1,10 +1,9 @@
-#https://www.instructables.com/Raspberry-Pi-TSL45315-Ambient-Light-Sensor-Python-/
-
 import smbus
 import time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 def read_tsl45315():
    print('---------read_tsl45315--------')
@@ -37,24 +36,19 @@ def read_tsl45315():
    # 2 bytes, LSB first
 
    data = bus.read_i2c_block_data(0x29, 0x04 | 0x80, 2)
-
-   # Convert the data to lux
-
    luminance = data[1] * 256 + data[0]
 
-   # Output data to screen
-
-   print("Ambient Light Luminance : %d lux" %luminance)
    ts = getInflxTimestamp()
-   write2influxapi(f'tsl45315,type=light luminance={luminance} {ts}')
+   data = f'tsl45315,type=light luminance={luminance} {ts}'
+   writeBuffer('influx-tsl45315', data)
 
    ts = getOSMTimestamp()
    osm_data = [
       {"sensor": f"{brightID}","value": f"{luminance}","createdAt": f"{ts}"}
    ]
-   postOSMvalues(osm_data)
+   writeBuffer('osm-tsl45315', osm_data)
 
-   postOpenhabValues(oh_brightID, luminance, ts)
+   writeBuffer('openhab-tsl45315', f'{oh_brightID},{luminance},{ts}')
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from classes.sps30 import SPS30
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 
 def read_sps30():
@@ -46,12 +47,9 @@ def read_sps30():
 
     ts = getInflxTimestamp()
     data = f'sps30,type=particular_matter dense_pm1={dense_pm1},dense_pm25={dense_pm25},dense_pm4={dense_pm4},dense_pm10={dense_pm10},cnt_particals_pm05={c_pm05},cnt_particals_pm1={c_pm1},cnt_particals_pm25={c_pm25},cnt_particals_pm4={c_pm4},cnt_particals_pm10={c_pm10} {ts}'
-
-    write2influxapi(data)
+    writeBuffer('influx-sps30', data)
 
     ts = getOSMTimestamp()
-
-    # send a bunch of data to OSM (prevents response 429 too many requests)
     osm_data = [
         {"sensor": f"{dense_pm1_ID}", "value": f"{dense_pm1}", "createdAt": f"{ts}"},
         {"sensor": f"{dense_pm4_ID}", "value": f"{dense_pm4}", "createdAt": f"{ts}"},
@@ -63,18 +61,18 @@ def read_sps30():
         {"sensor": f"{count_partical_pm10_ID}", "value": f"{c_pm10}", "createdAt": f"{ts}"},
         {"sensor": f"{count_partical_pm25_ID}", "value": f"{c_pm25}", "createdAt": f"{ts}"}
         ]
-
-    postOSMvalues(osm_data)
-
-    postOpenhabValues(oh_dense_pm1_ID, dense_pm1, ts)
-    postOpenhabValues(oh_dense_pm4_ID, dense_pm4, ts)
-    postOpenhabValues(oh_dense_pm10_ID, dense_pm10, ts)
-    postOpenhabValues(oh_dense_pm25_ID, dense_pm25, ts)
-    postOpenhabValues(oh_count_partical_pm05_ID, c_pm05, ts)
-    postOpenhabValues(oh_count_partical_pm1_ID, c_pm1, ts)
-    postOpenhabValues(oh_count_partical_pm4_ID, c_pm4, ts)
-    postOpenhabValues(oh_count_partical_pm10_ID, c_pm10, ts)
-    postOpenhabValues(oh_count_partical_pm25_ID, c_pm25, ts)
+    writeBuffer('osmsps30', osm_data)
+    
+    data = f'{oh_dense_pm1_ID},{dense_pm1},{ts}\n'
+    data += f'{oh_dense_pm4_ID},{dense_pm4},{ts}\n'
+    data += f'{oh_dense_pm10_ID},{dense_pm10},{ts}\n'
+    data += f'{oh_dense_pm25_ID},{dense_pm25},{ts}\n'
+    data += f'{oh_count_partical_pm05_ID},{c_pm05},{ts}\n'
+    data += f'{oh_count_partical_pm1_ID},{c_pm1},{ts}\n'
+    data += f'{oh_count_partical_pm4_ID},{c_pm4},{ts}\n'
+    data += f'{oh_count_partical_pm10_ID},{c_pm10},{ts}\n'
+    data += f'{oh_count_partical_pm25_ID},{c_pm25},{ts}\n'
+    writeBuffer('openhabsps30', data)
 
 if __name__ == "__main__":
     read_sps30()

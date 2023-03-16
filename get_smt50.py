@@ -4,6 +4,7 @@ from time import sleep
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
@@ -36,17 +37,19 @@ def read_smt50():
    soilMoisture = (voltage * 100) / 2.99
 
    ts = getInflxTimestamp()
-   write2influxapi(f'sht50,type=soil  temperature={soilTemperature},humidity={soilMoisture} {ts}')
+   data = f'sht50,type=soil  temperature={soilTemperature},humidity={soilMoisture} {ts}'
+   writeBuffer('influx-smt50', data)
 
    ts = getOSMTimestamp()
    osm_data = [
       {"sensor": f"{soiltempID}", "value": f"{soilTemperature}", "createdAt": f"{ts}"},
       {"sensor": f"{soilHumiID}", "value": f"{soilMoisture}", "createdAt": f"{ts}"}
    ]
-   postOSMvalues(osm_data)
+   writeBuffer('osm-smt50', osm_data)
 
-   postOpenhabValues(oh_soiltempID, soilTemperature, ts)
-   postOpenhabValues(oh_soilHumiID, soilMoisture, ts)
+   data = f'{oh_soiltempID},{soilTemperature},{ts}\n'
+   data += f'{oh_soilHumiID},{soilMoisture},{ts}\n'
+   writeBuffer('openhab-smt50', data)
 
 
 if __name__ == "__main__":

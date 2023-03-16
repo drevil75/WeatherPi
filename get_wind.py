@@ -4,6 +4,7 @@ import time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 import configparser
 
 config = configparser.ConfigParser()
@@ -30,7 +31,7 @@ GPIO.setup(pin_wind, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 def isr_wind(channel):  
     global Counter_Wind
     Counter_Wind += 1
-    print("Counter_Wind: %d" % Counter_Wind)
+    # print("Counter_Wind: %d" % Counter_Wind)
 
 # Interrupts aktivieren
 GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = 50) 
@@ -44,17 +45,19 @@ try:
         if t == 60:
 
             if Counter_Wind > 0:
-                windspeed = (Counter_Wind / 2) / 60.0 * 2.4 # Counter / 60 Seconds * 2.4m/s
+                windspeed = (Counter_Wind) / 60.0 * 2.4 # Counter / 60 Seconds * 2.4m/s
 
                 ts = getInflxTimestamp()
-                write2influxapi(f'wind,type=anemometer  volume={windspeed} {ts}')
+                data = f'wind,type=anemometer  volume={windspeed} {ts}'
+                writeBuffer('influx-wind', data)
 
                 ts = getOSMTimestamp()
                 osm_data = [
                     {"sensor": f"{windspeedID}","value": f"{windspeed}","createdAt": f"{ts}"}
                 ]
-                postOSMvalues(osm_data)
-                postOpenhabValues(oh_windspeedID, windspeed, ts)
+                writeBuffer('osm-wind', osm_data)
+
+                writeBuffer('openhab-wind', f'{oh_windspeedID},{windspeed},{ts}')
 
             windspeed = 0
             Counter_Wind = 0

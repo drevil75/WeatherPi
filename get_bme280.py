@@ -5,7 +5,7 @@ import datetime, time
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
-
+from apis.send2buffer import writeBuffer
 
 # Objekte erstellen
 i2c     = busio.I2C(board.SCL, board.SDA)
@@ -25,16 +25,17 @@ def read_bme280():
   print("Humidity : ", round(humidity,2), "%")
 
   ts = getInflxTimestamp()
-  write2influxapi(f'bme280,type=air temperature={temperature},humidity={humidity},pressure={pressure} {ts}')
+  data = f'bme280,type=air temperature={temperature},humidity={humidity},pressure={pressure} {ts}'
+  writeBuffer('influx-bme280', data)
 
   ts = getOSMTimestamp()
   osm_data = [
     {"sensor": f"{presID}","value": f"{pressure}","createdAt": f"{ts}"}
   ]
-  postOSMvalues(osm_data)
+  writeBuffer('osm-bme280', osm_data)
 
   ts = getOpenhabTimestamp()
-  postOpenhabValues(oh_presID, pressure, ts)
+  writeBuffer('openhab-bme280', f'{oh_presID},{pressure},{ts}')
 
 if __name__ == "__main__":
   read_bme280()

@@ -4,6 +4,7 @@ from time import sleep
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
@@ -83,23 +84,23 @@ def read_mics():
       nh3Val = 0
 
    
-
    ts = getInflxTimestamp()
    data = f'mics6814,type=air co={coVal},no2={no2Val},nh3={nh3Val} {ts}'
-   write2influxapi(data)
+   writeBuffer('influx-misc6814', data)
 
    ts = getOSMTimestamp()
-   # send a bunch of data to OSM (prevents response 429 too many requests)
    osm_data = [
       {"sensor": f"{coID}", "value": f"{coVal}", "createdAt": f"{ts}"},
       {"sensor": f"{no2ID}", "value": f"{no2Val}", "createdAt": f"{ts}"},
       {"sensor": f"{nh3ID}", "value": f"{nh3Val}", "createdAt": f"{ts}"}
       ]
-   postOSMvalues(osm_data)
+   writeBuffer('osm-misc6814', osm_data)
 
-   postOpenhabValues(coID, coVal, ts)
-   postOpenhabValues(no2ID, no2Val, ts)
-   postOpenhabValues(nh3ID, nh3Val, ts)
+   data = f'{coID},{coVal},{ts}\n'
+   data += f'{no2ID},{no2Val},{ts}\n'
+   data += f'{nh3ID},{nh3Val},{ts}\n'
+   writeBuffer('openhab-misc6814', data)
+   
 
 if __name__ == "__main__":
     read_mics()

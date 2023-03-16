@@ -4,6 +4,7 @@ from time import sleep
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
+from apis.send2buffer import writeBuffer
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
@@ -53,16 +54,16 @@ def read_sensor():
 
    ts = getInflxTimestamp()
    data = f'mq131,type=air o3={val} {ts}'
-   write2influxapi(data)
+   writeBuffer('influx-mq131', data)
 
    ts = getOSMTimestamp()
-   # send a bunch of data to OSM (prevents response 429 too many requests)
    osm_data = [
       {"sensor": f"{coID}", "value": f"{val}", "createdAt": f"{ts}"}
       ]
-   postOSMvalues(osm_data)
+   writeBuffer('osm-mq131', osm_data)
 
-   postOpenhabValues(o3ID, val, ts)
+   writeBuffer('openhab-mq131', f'{o3ID},{val},{ts}')
+   
 
 if __name__ == "__main__":
     read_sensor()
