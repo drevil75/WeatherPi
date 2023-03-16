@@ -19,7 +19,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(pin_wind, GPIO.IN) # Pin 12
 
 # internen Pullup-Widerstand aktivieren.
-GPIO.setup(pin_wind, GPIO.IN, pull_up_down = GPIO.PUD_UP)  
+GPIO.setup(pin_wind, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)  
 
 # Callback fuer GPIO
 def isr_wind(channel):  
@@ -83,7 +83,8 @@ try:
                 bouncetime = 10
             if Counter_Wind > 1500:
                 bouncetime = 5
-            GPIO.change_event_detect(pin_wind, GPIO.RISING, callback = isr_wind, bouncetime = bouncetime)
+            GPIO.remove_event_detect(pin_wind)
+            GPIO.add_event_detect(pin_wind, GPIO.RISING, callback = isr_wind, bouncetime = bouncetime)
 
 
 
