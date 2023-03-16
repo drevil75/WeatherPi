@@ -83,6 +83,8 @@ try:
                 bouncetime = 10
             if Counter_Wind > 1500:
                 bouncetime = 5
+            GPIO.change_event_detect(pin_wind, GPIO.RISING, callback = isr_wind, bouncetime = bouncetime)
+
 
 
             windspeed = 0
