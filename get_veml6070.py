@@ -33,7 +33,8 @@ def read_veml6070():
         ]
         writeBuffer('osm-veml6070', json.dumps(osm_data))
 
-        writeBuffer('openhab-veml6070', f'{oh_uvID},{uv_raw},{ts}')
+        # writeBuffer('openhab-veml6070', f'{oh_uvID},{uv_raw},{ts}')
+        postOpenhabValues(oh_uvID,uv_raw, ts)
 
 if __name__ == "__main__":
     read_veml6070()        

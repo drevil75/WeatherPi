@@ -70,7 +70,8 @@ try:
                 ]
                 writeBuffer('osm-wind', json.dumps(osm_data))
 
-                writeBuffer('openhab-wind', f'{oh_windspeedID},{windspeed},{ts}')
+                # writeBuffer('openhab-wind', f'{oh_windspeedID},{windspeed},{ts}')
+                postOpenhabValues(oh_windspeedID,windspeed, ts)
 
             windspeed = 0
             Counter_Wind = 0

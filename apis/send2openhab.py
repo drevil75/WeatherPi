@@ -49,8 +49,10 @@ def postOpenhabValues(ItemName, val, ts):
         r = requests.post(url, headers=headers, data=str(val), timeout=10)
         print(f'rc={r.status_code}')
         if r.status_code in [200, 201, 202, 203, 204]:
-            err_code = 1
+            err_code = 'ok'
         else:   
             err_code = r.text
     except:
             err_code = 'timeout'
+
+    return err_code

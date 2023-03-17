@@ -99,7 +99,10 @@ def read_mics():
    data = f'{coID},{coVal},{ts}\n'
    data += f'{no2ID},{no2Val},{ts}\n'
    data += f'{nh3ID},{nh3Val},{ts}\n'
-   writeBuffer('openhab-misc6814', data)
+   # writeBuffer('openhab-misc6814', data)
+   postOpenhabValues(coID,coVal, ts)
+   postOpenhabValues(no2ID,no2Val, ts)
+   postOpenhabValues(nh3ID,nh3Val, ts)
    
 
 if __name__ == "__main__":

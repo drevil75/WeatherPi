@@ -62,7 +62,8 @@ def read_sensor():
       ]
    writeBuffer('osm-mq131', json.dumps(osm_data))
 
-   writeBuffer('openhab-mq131', f'{o3ID},{val},{ts}')
+   # writeBuffer('openhab-mq131', f'{o3ID},{val},{ts}')
+   postOpenhabValues(o3ID,val, ts)
    
 
 if __name__ == "__main__":

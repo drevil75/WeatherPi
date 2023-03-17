@@ -35,7 +35,8 @@ def read_bme280():
   writeBuffer('osm-bme280', json.dumps(osm_data))
 
   ts = getOpenhabTimestamp()
-  writeBuffer('openhab-bme280', f'{oh_presID},{pressure},{ts}')
+  # writeBuffer('openhab-bme280', f'{oh_presID},{pressure},{ts}')
+  postOpenhabValues(presID,pressure, ts)
 
 if __name__ == "__main__":
   read_bme280()

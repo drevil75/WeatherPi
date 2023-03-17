@@ -37,13 +37,10 @@ def write2influxapi(data):
       r = requests.post(url, data=data, headers=headers, timeout=10)
       print(f'rc={r.status_code}')
       if r.status_code in [200, 201, 202, 203, 204]:
-         err_code = 1
+         err_code = 'ok'
       else:   
          err_code = r.text
    except:
       err_code = 'timeout'
    
-   if err_code != 1:
-      f = open(cachefile, mode='a', encoding='utf-8')
-      f.write(f'{data}\n')
-      f.close()
+   return err_code

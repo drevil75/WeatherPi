@@ -41,7 +41,10 @@ def read_cjmcu811():
     data = f'{oh_co2ppmID},{co2ppm},{ts}\n'
     data += f'{oh_co2ppbID},{co2ppb},{ts}\n'
     data += f'{oh_co2tempID},{co2temp},{ts}\n'
-    writeBuffer('openhab-cjmcu811', data)
+    # writeBuffer('openhab-cjmcu811', data)
+    postOpenhabValues(oh_co2ppmID,co2ppm, ts)
+    postOpenhabValues(oh_co2ppbID,co2ppb, ts)
+    postOpenhabValues(oh_co2tempID,co2temp, ts)
 
 if __name__ == "__main__":
     read_cjmcu811()

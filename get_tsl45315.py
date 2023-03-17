@@ -48,7 +48,8 @@ def read_tsl45315():
    ]
    writeBuffer('osm-tsl45315', json.dumps(osm_data))
 
-   writeBuffer('openhab-tsl45315', f'{oh_brightID},{luminance},{ts}')
+   # writeBuffer('openhab-tsl45315', f'{oh_brightID},{luminance},{ts}')
+   postOpenhabValues(oh_brightID,luminance, ts)
 
 
 if __name__ == "__main__":

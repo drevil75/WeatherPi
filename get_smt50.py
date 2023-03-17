@@ -49,7 +49,9 @@ def read_smt50():
 
    data = f'{oh_soiltempID},{soilTemperature},{ts}\n'
    data += f'{oh_soilHumiID},{soilMoisture},{ts}\n'
-   writeBuffer('openhab-smt50', data)
+   # writeBuffer('openhab-smt50', data)
+   postOpenhabValues(oh_soiltempID,soilTemperature, ts)
+   postOpenhabValues(oh_soilHumiID,soilMoisture, ts)
 
 
 if __name__ == "__main__":

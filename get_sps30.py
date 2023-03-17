@@ -72,7 +72,17 @@ def read_sps30():
     data += f'{oh_count_partical_pm4_ID},{c_pm4},{ts}\n'
     data += f'{oh_count_partical_pm10_ID},{c_pm10},{ts}\n'
     data += f'{oh_count_partical_pm25_ID},{c_pm25},{ts}\n'
-    writeBuffer('openhab-sps30', data)
+    # writeBuffer('openhab-sps30', data)
+
+    postOpenhabValues(oh_dense_pm1_ID,dense_pm1, ts)
+    postOpenhabValues(oh_dense_pm4_ID,dense_pm4, ts)
+    postOpenhabValues(oh_dense_pm10_ID,dense_pm10, ts)
+    postOpenhabValues(oh_dense_pm25_ID,dense_pm25, ts)
+    postOpenhabValues(oh_count_partical_pm05_ID,c_pm05, ts)
+    postOpenhabValues(oh_count_partical_pm1_ID,c_pm1, ts)
+    postOpenhabValues(oh_count_partical_pm4_ID,c_pm4, ts)
+    postOpenhabValues(oh_count_partical_pm10_ID,c_pm10, ts)
+    postOpenhabValues(oh_count_partical_pm25_ID,c_pm25, ts)
 
 if __name__ == "__main__":
     read_sps30()

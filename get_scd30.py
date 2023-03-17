@@ -36,7 +36,8 @@ def read_scd30():
     writeBuffer('osm-scd30', json.dumps(osm_data))
 
     ts = getOpenhabTimestamp()
-    writeBuffer('openhab-scd30', f'{oh_presID},{m[0]},{ts}')
+    # writeBuffer('openhab-scd30', f'{oh_presID},{m[0]},{ts}')
+    postOpenhabValues(oh_presID,m[0], ts)
 
 if __name__ == "__main__":
     read_scd30()

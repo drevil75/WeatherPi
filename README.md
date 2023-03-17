@@ -119,3 +119,24 @@ python3 get_dht22.py
 # or the main_ctrl.py to start all scripts
 python3 main_ctrl.py
 ````
+
+````shell
+crontab -e
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_bme28.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_hdc1080.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_misc6814.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_mq131.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_scd30.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_smt50.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_soundlevel.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_sps30.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_tsl45315.py
+* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_veml6070.py
+
+@reboot cd /home/weather/WeatherPi && /usr/bin/python3 get_rain.py
+@reboot cd /home/weather/WeatherPi && /usr/bin/python3 get_wind.py
+@reboot cd /home/weather/WeatherPi && /usr/bin/python3 transferData.py
+
+sudo crontab -e
+* * * * * /usr/sbin/iwconfig wlan0 > /mnt/ramdisk/wifi_signal.txt
+````

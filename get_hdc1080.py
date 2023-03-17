@@ -47,7 +47,9 @@ def read_hdc1080():
 
     data = f'{oh_tempID},{temperature_c},{ts}\n'
     data += f'{oh_humiID},{humidity},{ts}\n'
-    writeBuffer('openhab-hdc1080', data)
+    # writeBuffer('openhab-hdc1080', data)
+    postOpenhabValues(oh_tempID,temperature_c, ts)
+    postOpenhabValues(oh_humiID,humidity, ts)
 
 
 

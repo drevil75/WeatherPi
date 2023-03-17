@@ -58,7 +58,8 @@ try:
                 ]
                 writeBuffer('osm-rain', json.dumps(osm_data))
 
-                writeBuffer('openhab-rain', f'{oh_rainID},{rainvolume},{ts}')
+                # writeBuffer('openhab-rain', f'{oh_rainID},{rainvolume},{ts}')
+                postOpenhabValues(oh_rainID,rainvolume, ts)
 
             rainvolume = 0
             Counter_Rain = 0

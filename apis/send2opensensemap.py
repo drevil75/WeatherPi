@@ -51,21 +51,17 @@ def postOSMvalues(payload):
 
    url = osm_url + f'{senseBoxID}/data'
    headers = {'Authorization': f'{OpenSenseMap_TOKEN}', 'Content-Type': 'application/json'}
-   print(url, json.dumps(payload))
+   print(url)
    
    try:
-      r = requests.post(url, headers=headers, json=payload, timeout=10)
+      r = requests.post(url, headers=headers, json=payload, timeout=60)
       print(f'rc={r.status_code}')
       if r.status_code in [200, 201, 202, 203, 204]:
-         err_code = 1
+         err_code = 'ok'
       else:   
          err_code = r.text
    except:
       err_code = 'timeout'
       print('exception raised')
 
-   if err_code != 1:
-      # data = f'{sensorID}, {payload}'
-      f = open(cachefile, mode='a', encoding='utf-8')
-      f.write(f'{json.dumps(payload)}\n')
-      f.close()
+   return err_code
