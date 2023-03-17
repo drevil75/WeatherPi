@@ -6,7 +6,7 @@ import time
 Counter_Wind = 0
 windspeed = 0.0
 pin_wind = 20
-bouncetime = 100
+bouncetime = 80
 messungspeed = '50'
 
 
@@ -70,19 +70,16 @@ try:
             if Counter_Wind > 0:
                 windspeed = (Counter_Wind) / 60.0 * 2.4 # Counter / 60 Seconds * 2.4m/s
 
-            bouncetime = 50
             if Counter_Wind > 0:
-                bouncetime = 60
+                bouncetime = 100
             if Counter_Wind > 100:
                 bouncetime = 50
             if Counter_Wind > 500:
-                bouncetime = 40
+                bouncetime = 30
             if Counter_Wind > 1000:
                 bouncetime = 20
             if Counter_Wind > 1500:
                 bouncetime = 10
-            if Counter_Wind > 1500:
-                bouncetime = 5
             GPIO.remove_event_detect(pin_wind)
             GPIO.add_event_detect(pin_wind, GPIO.RISING, callback = isr_wind, bouncetime = bouncetime)
 

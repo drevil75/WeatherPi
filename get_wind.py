@@ -34,7 +34,7 @@ def isr_wind(channel):
     # print("Counter_Wind: %d" % Counter_Wind)
 
 # Interrupts aktivieren
-GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = 50) 
+GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = 80) 
 
 # Endlosschleife wie oben
 try:
@@ -45,7 +45,20 @@ try:
         if t == 60:
 
             if Counter_Wind > 0:
-                windspeed = (Counter_Wind) / 60.0 * 2.4 # Counter / 60 Seconds * 2.4m/s
+                windspeed = ((Counter_Wind) / 60.0 * 2.4) * 1.18 # Counter / 60 Seconds * 2.4m/s (1.18 is anemometer factor - loss of wind force)
+
+                if Counter_Wind > 0:
+                    bouncetime = 100
+                if Counter_Wind > 100:
+                    bouncetime = 50
+                if Counter_Wind > 500:
+                    bouncetime = 30
+                if Counter_Wind > 1000:
+                    bouncetime = 20
+                if Counter_Wind > 1500:
+                    bouncetime = 10
+                GPIO.remove_event_detect(pin_wind)
+                GPIO.add_event_detect(pin_wind, GPIO.RISING, callback = isr_wind, bouncetime = bouncetime)
 
                 ts = getInflxTimestamp()
                 data = f'wind,type=anemometer  volume={windspeed} {ts}'
