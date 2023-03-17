@@ -33,7 +33,7 @@ def read_scd30():
     osm_data = [
         {"sensor": f"{co2ID}","value": f"{m[0]}","createdAt": f"{ts}"}
     ]
-    writeBuffer('osm-scd30', osm_data)
+    writeBuffer('osm-scd30', json.dumps(osm_data))
 
     ts = getOpenhabTimestamp()
     writeBuffer('openhab-scd30', f'{oh_presID},{m[0]},{ts}')
