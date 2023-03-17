@@ -61,7 +61,7 @@ def read_sps30():
         {"sensor": f"{count_partical_pm10_ID}", "value": f"{c_pm10}", "createdAt": f"{ts}"},
         {"sensor": f"{count_partical_pm25_ID}", "value": f"{c_pm25}", "createdAt": f"{ts}"}
         ]
-    writeBuffer('osmsps30', json.dumps(osm_data))
+    writeBuffer('osm-sps30', json.dumps(osm_data))
     
     data = f'{oh_dense_pm1_ID},{dense_pm1},{ts}\n'
     data += f'{oh_dense_pm4_ID},{dense_pm4},{ts}\n'
@@ -72,7 +72,7 @@ def read_sps30():
     data += f'{oh_count_partical_pm4_ID},{c_pm4},{ts}\n'
     data += f'{oh_count_partical_pm10_ID},{c_pm10},{ts}\n'
     data += f'{oh_count_partical_pm25_ID},{c_pm25},{ts}\n'
-    writeBuffer('openhabsps30', data)
+    writeBuffer('openhab-sps30', data)
 
 if __name__ == "__main__":
     read_sps30()
