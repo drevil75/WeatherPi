@@ -5,7 +5,7 @@ from apis.datetimes import getTimestampStr
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
-cachedir = int(config['default']['cachedir'])
+cachedir = config['default']['cachedir']
 
 
 
