@@ -94,7 +94,7 @@ def read_mics():
       {"sensor": f"{no2ID}", "value": f"{no2Val}", "createdAt": f"{ts}"},
       {"sensor": f"{nh3ID}", "value": f"{nh3Val}", "createdAt": f"{ts}"}
       ]
-   writeBuffer('osm-misc6814', osm_data)
+   writeBuffer('osm-misc6814', json.dumps(osm_data))
 
    data = f'{coID},{coVal},{ts}\n'
    data += f'{no2ID},{no2Val},{ts}\n'

@@ -56,7 +56,7 @@ try:
                 osm_data = [
                     {"sensor": f"{rainID}","value": f"{rainvolume}","createdAt": f"{ts}"}
                 ]
-                writeBuffer('osm-rain', osm_data)
+                writeBuffer('osm-rain', json.dumps(osm_data))
 
                 writeBuffer('openhab-rain', f'{oh_rainID},{rainvolume},{ts}')
 

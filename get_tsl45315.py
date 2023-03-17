@@ -46,7 +46,7 @@ def read_tsl45315():
    osm_data = [
       {"sensor": f"{brightID}","value": f"{luminance}","createdAt": f"{ts}"}
    ]
-   writeBuffer('osm-tsl45315', osm_data)
+   writeBuffer('osm-tsl45315', json.dumps(osm_data))
 
    writeBuffer('openhab-tsl45315', f'{oh_brightID},{luminance},{ts}')
 

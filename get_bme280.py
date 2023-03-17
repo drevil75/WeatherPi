@@ -32,7 +32,7 @@ def read_bme280():
   osm_data = [
     {"sensor": f"{presID}","value": f"{pressure}","createdAt": f"{ts}"}
   ]
-  writeBuffer('osm-bme280', osm_data)
+  writeBuffer('osm-bme280', json.dumps(osm_data))
 
   ts = getOpenhabTimestamp()
   writeBuffer('openhab-bme280', f'{oh_presID},{pressure},{ts}')

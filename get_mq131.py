@@ -60,7 +60,7 @@ def read_sensor():
    osm_data = [
       {"sensor": f"{coID}", "value": f"{val}", "createdAt": f"{ts}"}
       ]
-   writeBuffer('osm-mq131', osm_data)
+   writeBuffer('osm-mq131', json.dumps(osm_data))
 
    writeBuffer('openhab-mq131', f'{o3ID},{val},{ts}')
    

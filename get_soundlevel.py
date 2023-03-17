@@ -65,7 +65,7 @@ def read_sound():
    osm_data = [
       {"sensor": f"{soundID}","value": f"{val}","createdAt": f"{ts}"}
    ]
-   writeBuffer('osm-sound', osm_data)
+   writeBuffer('osm-sound', json.dumps(osm_data))
 
    writeBuffer('openhab-sound', f'{oh_soundID},{val},{ts}')
 

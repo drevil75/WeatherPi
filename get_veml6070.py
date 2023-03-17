@@ -31,7 +31,7 @@ def read_veml6070():
         osm_data = [
             {"sensor": f"{uvID}","value": f"{uv_raw}","createdAt": f"{ts}"}
         ]
-        writeBuffer('osm-veml6070', osm_data)
+        writeBuffer('osm-veml6070', json.dumps(osm_data))
 
         writeBuffer('openhab-veml6070', f'{oh_uvID},{uv_raw},{ts}')
 

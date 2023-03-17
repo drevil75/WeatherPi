@@ -43,7 +43,7 @@ def read_hdc1080():
     {"sensor": f"{tempID}","value": f"{temperature_c}","createdAt": f"{ts}"},
     {"sensor": f"{humiID}","value": f"{humidity}","createdAt": f"{ts}"}
     ]
-    writeBuffer('osm-hdc1080', osm_data)
+    writeBuffer('osm-hdc1080', json.dumps(osm_data))
 
     data = f'{oh_tempID},{temperature_c},{ts}\n'
     data += f'{oh_humiID},{humidity},{ts}\n'

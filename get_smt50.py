@@ -45,7 +45,7 @@ def read_smt50():
       {"sensor": f"{soiltempID}", "value": f"{soilTemperature}", "createdAt": f"{ts}"},
       {"sensor": f"{soilHumiID}", "value": f"{soilMoisture}", "createdAt": f"{ts}"}
    ]
-   writeBuffer('osm-smt50', osm_data)
+   writeBuffer('osm-smt50', json.dumps(osm_data))
 
    data = f'{oh_soiltempID},{soilTemperature},{ts}\n'
    data += f'{oh_soilHumiID},{soilMoisture},{ts}\n'

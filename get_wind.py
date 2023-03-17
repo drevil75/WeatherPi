@@ -68,7 +68,7 @@ try:
                 osm_data = [
                     {"sensor": f"{windspeedID}","value": f"{windspeed}","createdAt": f"{ts}"}
                 ]
-                writeBuffer('osm-wind', osm_data)
+                writeBuffer('osm-wind', json.dumps(osm_data))
 
                 writeBuffer('openhab-wind', f'{oh_windspeedID},{windspeed},{ts}')
 
