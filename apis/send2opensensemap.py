@@ -34,6 +34,9 @@ coID = config['opensensemap']['coID']
 nh3ID = config['opensensemap']['nh3ID']
 no2ID = config['opensensemap']['no2ID']
 o3ID = config['opensensemap']['o3ID']
+co2ppmID = config['opensensemap']['co2ppmID']
+co2ppbID = config['opensensemap']['co2ppbID']
+co2tempID = config['opensensemap']['co2tempID']
 
 
 def getOSMTimestamp():

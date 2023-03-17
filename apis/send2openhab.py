@@ -25,7 +25,9 @@ oh_brightID = config['openhab']['brightID']
 oh_uvID = config['openhab']['uvID']
 oh_rainID = config['openhab']['rainID']
 oh_soundID = config['openhab']['soundID']
-
+oh_co2ppmID = config['openhab']['co2ppmID']
+oh_co2ppbID = config['openhab']['co2ppbID']
+oh_co2tempID = config['openhab']['co2tempID']
 
 
 def getOpenhabTimestamp():

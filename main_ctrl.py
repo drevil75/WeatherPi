@@ -4,6 +4,7 @@ import subprocess
 while True:
     try:
         subprocess.Popen(["python3", 'get_bme280.py'])
+        subprocess.Popen(["python3", 'get_cjmcu811.py'])
         subprocess.Popen(["python3", 'get_hdc1080.py'])
         subprocess.Popen(["python3", 'get_mics6814.py'])
         subprocess.Popen(["python3", 'get_mq131.py'])

@@ -3,6 +3,7 @@ smbus2
 adafruit-circuitpython-dht
 adafruit-circuitpython-veml6070
 adafruit-circuitpython-bme280
+adafruit-circuitpython-ccs811
 ephem
 RPi.GPIO
 python-dotenv
