@@ -2,7 +2,7 @@
 import sys
 import json
 from time import sleep
-from classes.SDL_Pi_HDC1080 import SDL_Pi_HDC1080
+import SDL_Pi_HDC1080
 from apis.send2influxapi import *
 from apis.send2opensensemap import *
 from apis.send2openhab import *
