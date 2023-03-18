@@ -6,10 +6,7 @@ from apis.send2buffer import writeBuffer
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
-cachedir = int(config['default']['cachedir'])
-
-
-# cachedir = '/Users/mirko/Documents/ramdisk/'
+cachedir = config['default']['cachedir']
 
 
 def getFileContent(file):
@@ -52,5 +49,7 @@ def transferINFLUXdata():
 
 
 if __name__ == "__main__":
-    transferOSMdata()    
-    transferINFLUXdata()
+    while True:
+        transferOSMdata()    
+        transferINFLUXdata()
+        time.sleep(600)

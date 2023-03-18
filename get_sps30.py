@@ -20,11 +20,11 @@ def read_sps30():
     print(f"Set auto cleaning interval: {pm_sensor.write_auto_cleaning_interval_days(2)}s")
 
     pm_sensor.start_measurement()
-    sleep(10)
-    print(json.dumps(pm_sensor.get_measurement(), indent=2))
     sleep(5)
-    print(json.dumps(pm_sensor.get_measurement(), indent=2))
-    sleep(5)
+    # print(json.dumps(pm_sensor.get_measurement(), indent=2))
+    # sleep(5)
+    # print(json.dumps(pm_sensor.get_measurement(), indent=2))
+    # sleep(5)
     vals = pm_sensor.get_measurement()
     pm_sensor.stop_measurement()
 
