@@ -17,7 +17,7 @@ while True:
         os.system('/usr/bin/python3 get_sps30.py')
         os.system('/usr/bin/python3 get_tsl45315.py')
         os.system('/usr/bin/python3 get_veml6070.py')
-        os.system('/usr/bin/python3 get_wifi_signal_strength')
+        os.system('/usr/bin/python3 get_wifi_signal_strength.py')
         
         time.sleep(60)
     except:
