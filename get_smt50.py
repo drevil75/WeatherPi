@@ -36,6 +36,8 @@ def read_smt50():
    voltage = readadc(AnalogPinHumi) * (pin_voltage / 1024.0)
    soilMoisture = (voltage * 100) / 2.99
 
+   print(f'smt50 temp={soilTemperature}, humi={soilMoisture}')
+
    ts = getInflxTimestamp()
    data = f'sht50,type=soil  temperature={soilTemperature},humidity={soilMoisture} {ts}'
    writeBuffer('influx-smt50', data)

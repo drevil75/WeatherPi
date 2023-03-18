@@ -28,11 +28,11 @@ def read_hdc1080():
     hdc1080.turnHeaterOff() 
     hdc1080.readConfigRegister()
     hdc1080.readTemperature()
-    temperature_c = hdc1080.readTemperature()
+    temperature_c = round(hdc1080.readTemperature(),2)
     sleep(2)
     hdc1080.readHumidity()
-    humidity = hdc1080.readHumidity()
-    print(f'temp={temperature_c}, humi={humidity}')
+    humidity = round(hdc1080.readHumidity(),2)
+    print(f'hdc1080 temp={temperature_c}, humi={humidity}')
 
     ts = getInflxTimestamp()
     data = f'hdc1080,type=air  temperature={temperature_c},humidity={humidity} {ts}'

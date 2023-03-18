@@ -22,7 +22,7 @@ def read_scd30():
     m = scd30.read_measurement()
 
     if m is not None:
-        print(f"CO2: {m[0]:.2f}ppm, temp: {m[1]:.2f}'C, rh: {m[2]:.2f}%")
+        print(f"scd30 CO2: {m[0]:.2f}ppm, temp: {m[1]:.2f}'C, rh: {m[2]:.2f}%")
         time.sleep(2)
 
     ts = getInflxTimestamp()

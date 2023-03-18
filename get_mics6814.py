@@ -57,7 +57,7 @@ def read_mics():
    no2PinVal = readadc(no2_pin)
    nh3PinVal = readadc(nh3_pin)
 
-   print(coPinVal, no2PinVal, nh3PinVal)
+   print(f'mics6814 coPinVal={coPinVal}, no2PinVal={no2PinVal}, nh3PinVal={nh3PinVal}')
 
    if type(coPinVal) == int:
       if coPinVal in range(0,1023):

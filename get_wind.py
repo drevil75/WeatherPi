@@ -60,8 +60,10 @@ try:
                 GPIO.remove_event_detect(pin_wind)
                 GPIO.add_event_detect(pin_wind, GPIO.RISING, callback = isr_wind, bouncetime = bouncetime)
 
+                print(f'wind speed={windspeed}')
+                
                 ts = getInflxTimestamp()
-                data = f'wind,type=anemometer  volume={windspeed} {ts}'
+                data = f'wind,type=anemometer  speed={windspeed} {ts}'
                 writeBuffer('influx-wind', data)
 
                 ts = getOSMTimestamp()

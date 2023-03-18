@@ -19,10 +19,10 @@ def read_veml6070():
         for j in range(4):
             uv_raw = uv.uv_raw
             risk_level = uv.get_index(uv_raw)
-            print("Reading: {0} | Risk Level: {1}".format(uv_raw, risk_level))
             time.sleep(1)
 
-        print(f"UV: {uv_raw}")
+        print(f"veml6070 uv={uv_raw}, risk_level={risk_level}")
+
         ts = getInflxTimestamp()
         data = f'veml6070,type=uv uv={uv_raw} {ts}'
         writeBuffer('influx-veml6070', data)

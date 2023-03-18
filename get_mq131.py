@@ -30,7 +30,7 @@ def mapRange(vmin, vmax, steps):
         vmin += step
         vals.append(vmin)
 
-    print(len(vals), min(vals), max(vals))
+    # print(len(vals), min(vals), max(vals))
     return vals
 
 
@@ -50,6 +50,8 @@ def read_sensor():
    else:
       val = 0
 
+   print(f'mq131 o3={val}')
+
    
 
    ts = getInflxTimestamp()
@@ -58,7 +60,7 @@ def read_sensor():
 
    ts = getOSMTimestamp()
    osm_data = [
-      {"sensor": f"{coID}", "value": f"{val}", "createdAt": f"{ts}"}
+      {"sensor": f"{o3ID}", "value": f"{val}", "createdAt": f"{ts}"}
       ]
    writeBuffer('osm-mq131', json.dumps(osm_data))
 

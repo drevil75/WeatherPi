@@ -18,11 +18,11 @@ fac      = pow(1.0-seehoehe/44330.0, 5.255)
 def read_bme280():
   print('---------read_bme280--------')
 
-  temperature,pressure,humidity = bme280.temperature, (bme280.pressure/fac), bme280.humidity
+  temperature,pressure,humidity = round(bme280.temperature,2), round((bme280.pressure/fac),2), round(bme280.humidity,2)
 
-  print("Temperature : ", round(temperature,2), "C")
-  print("Pressure : ", round(pressure), "hPa")
-  print("Humidity : ", round(humidity,2), "%")
+  print("bme280 Temperature : ", round(temperature,2), "C")
+  print("bme280 Pressure : ", round(pressure), "hPa")
+  print("bme280 Humidity : ", round(humidity,2), "%")
 
   ts = getInflxTimestamp()
   data = f'bme280,type=air temperature={temperature},humidity={humidity},pressure={pressure} {ts}'

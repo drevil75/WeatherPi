@@ -57,6 +57,8 @@ def read_sound():
    else:
       val = 0
 
+   print(f'sound volume={val}')
+
    ts = getInflxTimestamp()
    data = f'dfrobot,type=sound  volume={val} {ts}'
    writeBuffer('influx-sound', data)

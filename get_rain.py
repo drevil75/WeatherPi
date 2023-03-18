@@ -33,7 +33,7 @@ GPIO.setup(pin_rain, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 def isr_rain(channel):  
     global Counter_Rain
     Counter_Rain += 1
-    print("Counter_Rain: %d" % Counter_Rain)
+    # print("Counter_Rain: %d" % Counter_Rain)
 
 # Interrupts aktivieren
 GPIO.add_event_detect(pin_rain, GPIO.RISING, callback = isr_rain, bouncetime = 500) 
@@ -47,6 +47,8 @@ try:
         if t == 60:
             if Counter_Rain > 0:
                 rainvolume = Counter_Rain * volPerKlick
+
+                print(f'rain vol={rainvolume}')
 
                 ts = getInflxTimestamp()
                 data = f'rain,type=gauge  volume={rainvolume} {ts}'

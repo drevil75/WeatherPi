@@ -38,6 +38,8 @@ def read_tsl45315():
    data = bus.read_i2c_block_data(0x29, 0x04 | 0x80, 2)
    luminance = data[1] * 256 + data[0]
 
+   print(f'tsl45315 lux={luminance}')
+
    ts = getInflxTimestamp()
    data = f'tsl45315,type=light luminance={luminance} {ts}'
    writeBuffer('influx-tsl45315', data)

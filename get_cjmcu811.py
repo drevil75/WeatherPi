@@ -21,9 +21,11 @@ def read_cjmcu811():
     while not ccs811.data_ready:
         pass
 
-    co2ppm = ccs811.eco2
-    co2ppb = ccs811.tvoc
-    co2temp = ccs811.temperature
+    co2ppm = round(ccs811.eco2,2)
+    co2ppb = round(ccs811.tvoc,2)
+    co2temp = round(ccs811.temperature,2)
+
+    print(f'cjmcu811 co2ppm={co2ppm}, co2ppb={co2ppb}, co2temp={co2temp}')
 
     ts = getInflxTimestamp()
     data = f'cjmcu811,type=air co2ppm={co2ppm},co2ppb={co2ppb},co2temp={co2temp} {ts}'

@@ -14,18 +14,18 @@ Now is the time to migrate the SenseBox to an Raspberry.
 ## Sensors
 
 ### Digital
-- dht22 for air temperature and humidity
 - rain gauge - simple rain measurment based on interrupts counting
 - wind anemometer - simple wind measurment based on interrupts counting
 
 ### I2C
+- hdc1080 for air temperature and humidity
 - bme280 for air pressure (temp. and humidity will not used)
 - sps30 laser based for particular matters PM0.5, PM1.0, PM2.5, PM4.0, PM10 dense and particals count
 - tsl45315 for brightness
 - veml6070 for uv intensity
 
 ### Analog
-- sht50 for soil temp. and humidity
+- smt50 for soil temp. and humidity
 - DFRobot environment volume measurement
 
 
@@ -34,30 +34,34 @@ use RaspiImager
 - hostname: weatherpi
 - user: weather
 - pw: ...
-- WIFI: your wifi credentials
+- WIFI-Name: your wifi name
+- WIFI-PW: your WIFI-Password
 
-- reduce all write access to an absolute minimum to extend the lifetime of the microSD to a maximum - disable logging for that purpose
+- reduce all write access to an absolute minimum to extend the lifetime of the microSD to a maximum 
+- create ramdisk, disable logging
 
 ````shell
 # sudo systemctl disable rsyslog
 # sudo systemctl stop rsyslog
 
+# update and install packages
 sudo apt update && sudo apt upgrade -y
 sudo apt install --upgrade python3-pip fail2ban ntpdate git libgpiod2 -y
 
+# clone weatherpi repository
 cd ~ && git clone https://github.com/drevil75/WeatherPi.git && cd WeatherPi
 
+# install python libraries
 pip3 install -r setup/requirements.txt
 
+# install setuptools for adafruit shell
 pip3 install --upgrade setuptools
 sudo pip3 install --upgrade setuptools adafruit-python-shell
-
 cd ~ && wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
 sudo python3 raspi-blinka.py
 
 # create a ramdisk for cache files
 sudo mkdir /mnt/ramdisk
-sudo chmod -R 777 /mnt/ramdisk
 sudo nano /etc/fstab
 
 # ramdisk
@@ -113,30 +117,31 @@ nano config.cfg
 mv env.template .env
 nano .env
 
-# start the single scripts i.e.
-python3 get_dht22.py
-
-# or the main_ctrl.py to start all scripts
-python3 main_ctrl.py
 ````
 
+create service for python script
 ````shell
-crontab -e
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_bme28.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_hdc1080.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_misc6814.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_mq131.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_scd30.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_smt50.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_soundlevel.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_sps30.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_tsl45315.py
-* * * * * cd /home/weather/WeatherPi && /usr/bin/python3 get_veml6070.py
-
-@reboot cd /home/weather/WeatherPi && /usr/bin/python3 get_rain.py
-@reboot cd /home/weather/WeatherPi && /usr/bin/python3 get_wind.py
-@reboot cd /home/weather/WeatherPi && /usr/bin/python3 transferData.py
-
 sudo crontab -e
-* * * * * /usr/sbin/iwconfig wlan0 > /mnt/ramdisk/wifi_signal.txt
+* * * * * chmod -R 777 /mnt/ramdisk
+
+sudo nano /etc/systemd/system/weather.service
+
+# paste into the editor
+# ---------------
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 main_ctrl.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+sudo systemctl daemon-reload && sudo systemctl enable weather && sudo systemctl start weather
+
 ````

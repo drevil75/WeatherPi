@@ -37,7 +37,7 @@ o3ID = config['opensensemap']['o3ID']
 co2ppmID = config['opensensemap']['co2ppmID']
 co2ppbID = config['opensensemap']['co2ppbID']
 co2tempID = config['opensensemap']['co2tempID']
-
+wifiID = config['opensensemap']['wifiID']
 
 def getOSMTimestamp():
    now = datetime.datetime.now(datetime.timezone.utc)
