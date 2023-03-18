@@ -28,7 +28,9 @@ oh_soundID = config['openhab']['soundID']
 oh_co2ppmID = config['openhab']['co2ppmID']
 oh_co2ppbID = config['openhab']['co2ppbID']
 oh_co2tempID = config['openhab']['co2tempID']
-
+oh_coID = config['openhab']['coID']
+oh_nh3ID = config['openhab']['nh3ID']
+oh_no2ID = config['openhab']['no2ID']
 
 def getOpenhabTimestamp():
    now = datetime.datetime.now(datetime.timezone.utc)
