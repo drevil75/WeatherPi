@@ -4,6 +4,8 @@ import os, subprocess
 subprocess.Popen(['/usr/bin/python3', 'get_wind.py'])
 subprocess.Popen(['/usr/bin/python3', 'get_rain.py'])
 subprocess.Popen(['/usr/bin/python3', 'transferData.py'])
+subprocess.Popen(['/usr/bin/python3', 'fan_controller.py'])
+
 while True:
     try:
         os.system('/usr/bin/python3 get_bme280.py')
