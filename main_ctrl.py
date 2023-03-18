@@ -1,10 +1,9 @@
 import time
-import os
+import os, subprocess
 
-os.system('/usr/bin/python3 get_wind.py')
-os.system('/usr/bin/python3 get_rain.py')
-os.system('/usr/bin/python3 transferData.py')
-
+subprocess.Popen(['/usr/bin/python3', 'get_wind.py'])
+subprocess.Popen(['/usr/bin/python3', 'get_rain.py'])
+subprocess.Popen(['/usr/bin/python3', 'transferData.py'])
 while True:
     try:
         os.system('/usr/bin/python3 get_bme280.py')
