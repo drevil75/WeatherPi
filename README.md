@@ -442,6 +442,22 @@ sudo systemctl stop weather_wind
 sudo systemctl stop weather_transferData
 sudo systemctl stop weather_fanControl
 
+sudo systemctl start weather_bme280
+sudo systemctl start weather_hdc1080
+sudo systemctl start weather_mics6814
+sudo systemctl start weather_mq131
+sudo systemctl start weather_rain
+sudo systemctl start weather_scd30
+sudo systemctl start weather_smt50
+sudo systemctl start weather_soundlevel
+sudo systemctl start weather_sps30
+sudo systemctl start weather_tsl45315
+sudo systemctl start weather_veml6070
+sudo systemctl start weather_wifi
+sudo systemctl start weather_wind
+sudo systemctl start weather_transferData
+sudo systemctl start weather_fanControl
+
 sudo systemctl stop syslog.service
 sudo systemctl disable syslog.service
 ```
