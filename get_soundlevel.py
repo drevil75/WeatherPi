@@ -38,7 +38,7 @@ def mapRange(vmin, vmax, steps):
     return vals
 
 
-def read_sound():
+def read_sensor():
    print('---------read_sound--------')
    # Mappingliste für Sound-Level-Meter erstellen - Range 20-130dBA
    map = mapRange(vmin=20, vmax=130, steps=1024)
@@ -73,5 +73,6 @@ def read_sound():
    postOpenhabValues(oh_soundID,val, ts)
 
 
-if __name__ == "__main__":
-  read_sound()
+while True:
+  read_sensor()
+  time.sleep(60)

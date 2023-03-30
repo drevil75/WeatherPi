@@ -5,7 +5,7 @@ from apis.send2opensensemap import *
 from apis.send2openhab import *
 from apis.send2buffer import writeBuffer
 
-def read_tsl45315():
+def read_sensor():
    print('---------read_tsl45315--------')
    # Get I2C bus
 
@@ -54,5 +54,6 @@ def read_tsl45315():
    postOpenhabValues(oh_brightID,luminance, ts)
 
 
-if __name__ == "__main__":
-   read_tsl45315()
+while True:
+  read_sensor()
+  time.sleep(60)

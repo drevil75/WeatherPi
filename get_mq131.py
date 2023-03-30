@@ -68,5 +68,6 @@ def read_sensor():
    postOpenhabValues(oh_o3ID,val, ts)
    
 
-if __name__ == "__main__":
-    read_sensor()
+while True:
+  read_sensor()
+  time.sleep(60)

@@ -7,7 +7,7 @@ from apis.send2openhab import *
 from apis.send2buffer import writeBuffer
 
 
-def read_veml6070():
+def read_sensor():
     print('---------read_veml6070--------')
     with board.I2C() as i2c:
         uv = adafruit_veml6070.VEML6070(i2c)
@@ -36,5 +36,7 @@ def read_veml6070():
         # writeBuffer('openhab-veml6070', f'{oh_uvID},{uv_raw},{ts}')
         postOpenhabValues(oh_uvID,uv_raw, ts)
 
-if __name__ == "__main__":
-    read_veml6070()        
+while True:
+  read_sensor()
+  time.sleep(60)
+      

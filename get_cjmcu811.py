@@ -14,7 +14,7 @@ i2c = board.I2C()  # uses board.SCL and board.SDA
 ccs811 = adafruit_ccs811.CCS811(i2c)
 
 
-def read_cjmcu811():
+def read_sensor():
     print('---------read_cjmcu811--------')
     
     # Wait for the sensor to be ready
@@ -48,5 +48,7 @@ def read_cjmcu811():
     postOpenhabValues(oh_co2ppbID,co2ppb, ts)
     postOpenhabValues(oh_co2tempID,co2temp, ts)
 
-if __name__ == "__main__":
-    read_cjmcu811()
+ 
+while True:
+  read_sensor()
+  time.sleep(60)

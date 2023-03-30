@@ -8,7 +8,7 @@ from apis.send2openhab import *
 from apis.send2buffer import writeBuffer
 
 
-def read_sps30():
+def read_sensor():
     print('---------read_sps30--------')
     pm_sensor = SPS30()
     print(f"Firmware version: {pm_sensor.firmware_version()}")
@@ -84,5 +84,7 @@ def read_sps30():
     postOpenhabValues(oh_count_partical_pm10_ID,c_pm10, ts)
     postOpenhabValues(oh_count_partical_pm25_ID,c_pm25, ts)
 
-if __name__ == "__main__":
-    read_sps30()
+
+while True:
+  read_sensor()
+  time.sleep(60)

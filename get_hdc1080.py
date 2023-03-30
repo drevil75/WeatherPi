@@ -8,7 +8,7 @@ from apis.send2opensensemap import *
 from apis.send2openhab import *
 from apis.send2buffer import writeBuffer
 
-def read_hdc1080():
+def read_sensor():
     print('---------read_hdc1080--------')
     hdc1080 = SDL_Pi_HDC1080.SDL_Pi_HDC1080()
     vendor = hdc1080.readManufacturerID()
@@ -52,7 +52,7 @@ def read_hdc1080():
     postOpenhabValues(oh_humiID,humidity, ts)
 
 
-
-if __name__ == "__main__":
-    read_hdc1080()
+while True:
+  read_sensor()
+  time.sleep(60)
 

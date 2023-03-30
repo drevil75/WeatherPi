@@ -28,7 +28,7 @@ def readadc(pin):
  return adcout
 
 
-def read_smt50():
+def read_sensor():
    print('---------read_sound--------')
    voltage = readadc(AnalogPinTemp) * (pin_voltage / 1024.0)
    soilTemperature = (voltage - 0.48) * 100
@@ -56,6 +56,6 @@ def read_smt50():
    postOpenhabValues(oh_soilHumiID,soilMoisture, ts)
 
 
-if __name__ == "__main__":
-  read_smt50()
-
+while True:
+  read_sensor()
+  time.sleep(60)

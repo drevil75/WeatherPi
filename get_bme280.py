@@ -15,7 +15,7 @@ seehoehe = 200
 fac      = pow(1.0-seehoehe/44330.0, 5.255)
 
 
-def read_bme280():
+def read_sensor():
   print('---------read_bme280--------')
 
   temperature,pressure,humidity = round(bme280.temperature,2), round((bme280.pressure/fac),2), round(bme280.humidity,2)
@@ -38,5 +38,6 @@ def read_bme280():
   # writeBuffer('openhab-bme280', f'{oh_presID},{pressure},{ts}')
   postOpenhabValues(oh_presID,pressure, ts)
 
-if __name__ == "__main__":
-  read_bme280()
+while True:
+  read_sensor()
+  time.sleep(60)

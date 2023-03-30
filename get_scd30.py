@@ -15,7 +15,7 @@ scd30 = SCD30()
 # scd30.start_periodic_measurement()
 
 
-def read_scd30():
+def read_sensor():
     print('---------read_scd30--------')
 
     scd30.get_data_ready()
@@ -39,5 +39,6 @@ def read_scd30():
     # writeBuffer('openhab-scd30', f'{oh_presID},{m[0]},{ts}')
     postOpenhabValues(oh_presID,m[0], ts)
 
-if __name__ == "__main__":
-    read_scd30()
+while True:
+  read_sensor()
+  time.sleep(60)

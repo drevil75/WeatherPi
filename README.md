@@ -123,11 +123,14 @@ create service for python script
 ````shell
 sudo crontab -e
 * * * * * chmod -R 777 /mnt/ramdisk
+````
 
-sudo nano /etc/systemd/system/weather.service
 
-# paste into the editor
-# ---------------
+```shell
+sudo su -
+
+cat >> /etc/systemd/system/weather_bme280.service << EOF
+
 [Unit]
 Description=WeatherPi
 After=network.target
@@ -135,13 +138,310 @@ After=network.target
 [Service]
 User=weather
 WorkingDirectory=/home/weather/WeatherPi/
-ExecStart=python3 main_ctrl.py
+ExecStart=python3 get_bme280.py
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 # -----------
 
-sudo systemctl daemon-reload && sudo systemctl enable weather && sudo systemctl start weather
+EOF
 
-````
+
+cat >> /etc/systemd/system/weather_hdc1080.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_hdc1080.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+cat >> /etc/systemd/system/weather_mics6814.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_mics6814.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+cat >> /etc/systemd/system/weather_mq131.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_mq131.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+cat >> /etc/systemd/system/weather_rain.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_rain.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+cat >> /etc/systemd/system/weather_scd30.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_scd30.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+cat >> /etc/systemd/system/weather_smt50.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_smt50.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+cat >> /etc/systemd/system/weather_soundlevel.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_soundlevel.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+cat >> /etc/systemd/system/weather_sps30.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_sps30.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+cat >> /etc/systemd/system/weather_tsl45315.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_tsl45315.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+cat >> /etc/systemd/system/weather_veml6070.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_veml6070.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+cat >> /etc/systemd/system/weather_wifi.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_wifi_signal_strength.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+cat >> /etc/systemd/system/weather_wind.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 get_wind.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+cat >> /etc/systemd/system/weather_transferData.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 transferData.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+cat >> /etc/systemd/system/weather_fanControl.service << EOF
+
+[Unit]
+Description=WeatherPi
+After=network.target
+
+[Service]
+User=weather
+WorkingDirectory=/home/weather/WeatherPi/
+ExecStart=python3 fan_controller.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+# -----------
+
+EOF
+
+
+
+sudo systemctl daemon-reload
+sudo systemctl enable weather_bme280 && sudo systemctl start weather_bme280 && sudo systemctl status weather_bme280
+sudo systemctl enable weather_hdc1080 && sudo systemctl start weather_hdc1080 && sudo systemctl status weather_hdc1080
+sudo systemctl enable weather_mics6814 && sudo systemctl start weather_mics6814 && sudo systemctl status weather_mics6814
+sudo systemctl enable weather_mq131 && sudo systemctl start weather_mq131 && sudo systemctl status weather_mq131
+sudo systemctl enable weather_rain && sudo systemctl start weather_rain && sudo systemctl status weather_rain
+sudo systemctl enable weather_scd30 && sudo systemctl start weather_scd30 && sudo systemctl status weather_scd30
+sudo systemctl enable weather_smt50 && sudo systemctl start weather_smt50 && sudo systemctl status weather_smt50
+sudo systemctl enable weather_soundlevel && sudo systemctl start weather_soundlevel && sudo systemctl status weather_soundlevel
+sudo systemctl enable weather_sps30 && sudo systemctl start weather_sps30 && sudo systemctl status weather_sps30
+sudo systemctl enable weather_tsl45315 && sudo systemctl start weather_tsl45315 && sudo systemctl status weather_tsl45315
+sudo systemctl enable weather_veml6070 && sudo systemctl start weather_veml6070 && sudo systemctl status weather_veml6070
+sudo systemctl enable weather_wifi && sudo systemctl start weather_wifi && sudo systemctl status weather_wifi
+sudo systemctl enable weather_wind && sudo systemctl start weather_wind && sudo systemctl status weather_wind
+sudo systemctl enable weather_transferData && sudo systemctl start weather_transferData && sudo systemctl status weather_transferData
+sudo systemctl enable weather_fanControl && sudo systemctl start weather_fanControl && sudo systemctl status weather_fanControl
+
+sudo systemctl stop weather_bme280
+sudo systemctl stop weather_hdc1080
+sudo systemctl stop weather_mics6814
+sudo systemctl stop weather_mq131
+sudo systemctl stop weather_rain
+sudo systemctl stop weather_scd30
+sudo systemctl stop weather_smt50
+sudo systemctl stop weather_soundlevel
+sudo systemctl stop weather_sps30
+sudo systemctl stop weather_tsl45315
+sudo systemctl stop weather_veml6070
+sudo systemctl stop weather_wifi
+sudo systemctl stop weather_wind
+sudo systemctl stop weather_transferData
+sudo systemctl stop weather_fanControl
+
+sudo systemctl stop syslog.service
+sudo systemctl disable syslog.service
+```

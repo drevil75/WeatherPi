@@ -36,7 +36,7 @@ def mapRange(vmin, vmax, steps):
     return vals
 
 
-def read_mics():
+def read_sensor():
    print('---------read_mics6814--------')
    # Mappingliste für CO erstellen Sensor-Range 1-100ppm
    coMap = mapRange(vmin=1, vmax=100, steps=1024)
@@ -106,5 +106,6 @@ def read_mics():
    postOpenhabValues(oh_no2ID,nh3Val, ts)
    
 
-if __name__ == "__main__":
-    read_mics()
+while True:
+  read_sensor()
+  time.sleep(60)
