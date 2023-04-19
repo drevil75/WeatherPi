@@ -28,12 +28,11 @@ GPIO.setup(pin_rain, GPIO.IN) # Pin 11
 # internen Pullup-Widerstand aktivieren.
 GPIO.setup(pin_rain, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-
 # Callback fuer GPIO
 def isr_rain(channel):  
     global Counter_Rain
     Counter_Rain += 1
-    print("Counter_Rain: %d" % Counter_Rain)
+    # print("Counter_Rain: %d" % Counter_Rain)
 
 # Interrupts aktivieren
 GPIO.add_event_detect(pin_rain, GPIO.RISING, callback = isr_rain, bouncetime = 500) 

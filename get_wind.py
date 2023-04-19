@@ -31,7 +31,7 @@ GPIO.setup(pin_wind, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 def isr_wind(channel):  
     global Counter_Wind
     Counter_Wind += 1
-    print("Counter_Wind: %d" % Counter_Wind) 
+    # print("Counter_Wind: %d" % Counter_Wind) 
 
 # Interrupts aktivieren
 GPIO.add_event_detect(pin_wind, GPIO.FALLING, callback = isr_wind, bouncetime = 80) 
