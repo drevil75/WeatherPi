@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import RPi.GPIO as GPIO
 import time
 from apis.send2influxapi import *
