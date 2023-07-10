@@ -34,8 +34,8 @@ def write2influxapi(data):
    #          airSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 {ts}'
 
    try:
-      url += f"/write?org={org}&bucket={bucket}&precision=s"
-      r = requests.post(url, data=data, headers=headers, timeout=10)
+      write_url = f"{url}/write?org={org}&bucket={bucket}&precision=s"
+      r = requests.post(write_url, data=data, headers=headers, timeout=10)
       print(f'rc={r.status_code}')
       if r.status_code in [200, 201, 202, 203, 204]:
          err_code = 'ok'
@@ -48,13 +48,13 @@ def write2influxapi(data):
 
 def getInflxMonthlyRain():
    data = f"import \"date\" \nmonth = date.truncate(t: now(), unit: 1mo)\nfrom(bucket: \"{bucket}\")\n  |> range(start: month)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"rain\")\n  |> filter(fn: (r) => r[\"_field\"] == \"volume\")\n  |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")"
-   url += f"/query?org={org}"
-   print(url)
+   read_url = f"{url}/query?org={org}"
+   print(read_url)
    print(data)
    print(headers)
 
    # try:
-   r = requests.post(url, data=data, headers=headers, timeout=10)
+   r = requests.post(read_url, data=data, headers=headers, timeout=10)
    print(r.text)
    print(f'rc={r.status_code}')
 
