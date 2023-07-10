@@ -16,8 +16,6 @@ url = config['influxdb']['url']
 org = config['influxdb']['org']
 bucket = config['influxdb']['bucket']
 cachefile = config['default']['cachedir'] + config['influxdb']['cachefile']
-
-headers = {'Authorization': f'Token {INFLUXDB_TOKEN}','Content-Type': 'text/plain; charset=utf-8','Accept': 'application/json'}
 status = 0
 
 
@@ -29,6 +27,7 @@ def getInflxTimestamp(): # returns unix timestamp
 def write2influxapi(data):
    print('-------write2influxapi-------')
    print(f'data={data}')
+   headers = {'Authorization': f'Token {INFLUXDB_TOKEN}','Content-Type': 'text/plain; charset=utf-8','Accept': 'application/json'}
 
    # data = f'airSensors,sensor_id=TLM0201 temperature=73.97038159354763,humidity=35.23103248356096,co=0.48445310567793615 {ts}\n \
    #          airSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 {ts}'
@@ -49,6 +48,8 @@ def write2influxapi(data):
 def getInflxMonthlyRain():
    data = f"import \"date\" \nmonth = date.truncate(t: now(), unit: 1mo)\nfrom(bucket: \"{bucket}\")\n  |> range(start: month)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"rain\")\n  |> filter(fn: (r) => r[\"_field\"] == \"volume\")\n  |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")"
    read_url = f"{url}/query?org={org}"
+   headers = {'Authorization': f'Token {INFLUXDB_TOKEN}', 'Accept': 'application/csv', 'Content-Type': 'application/vnd.flux'}
+   
    print(read_url)
    print(data)
    print(headers)
