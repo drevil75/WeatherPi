@@ -61,8 +61,16 @@ while True:
             writeBuffer('osm-rain', json.dumps(osm_data))
 
             # writeBuffer('openhab-rain', f'{oh_rainID},{rainvolume},{ts}')
-            postOpenhabValues(oh_rainID,rainvolume, ts)
+            # openhab item shows the the monthly sum of rain volume 
 
+
+        # ---------------- get monthly sum of rain and write to openhab ----------------
+        rainsum = getInflxMonthlyRain()
+        if rainsum >= 0:
+            postOpenhabValues(oh_rainID,rainsum, ts)
+
+
+        rainsum = 0
         rainvolume = 0
         Counter_Rain = 0
         t = 0
