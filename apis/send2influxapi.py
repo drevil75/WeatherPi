@@ -47,9 +47,13 @@ def write2influxapi(data):
 
 def getInflxMonthlyRain():
    data = "import \"date\" \nmonth = date.truncate(t: now(), unit: 1mo)\nfrom(bucket: \"WeatherPi\")\n  |> range(start: month)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"rain\")\n  |> filter(fn: (r) => r[\"_field\"] == \"volume\")\n  |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")"
+   print(url)
+   print(data)
+   print(headers)
 
    # try:
    r = requests.post(url, data=data, headers=headers, timeout=10)
+   print(r.text)
    print(f'rc={r.status_code}')
 
    if r.status_code in [200, 201, 202, 203, 204]:
