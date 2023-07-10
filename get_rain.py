@@ -65,10 +65,13 @@ while True:
 
 
         # ---------------- get monthly sum of rain and write to openhab ----------------
-        rainsum = getInflxMonthlyRain()
-        print(rainsum)
-        if rainsum >= 0:
-            postOpenhabValues(oh_rainID,rainsum, ts)
+        try:
+            rainsum = getInflxMonthlyRain()
+            print(rainsum)
+            if rainsum >= 0:
+                postOpenhabValues(oh_rainID,rainsum, ts)
+        except:
+            pass
 
 
         rainsum = 0

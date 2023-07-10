@@ -49,26 +49,20 @@ def getInflxMonthlyRain():
    data = f"import \"date\" \nmonth = date.truncate(t: now(), unit: 1mo)\nfrom(bucket: \"{bucket}\")\n  |> range(start: month)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"rain\")\n  |> filter(fn: (r) => r[\"_field\"] == \"volume\")\n  |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")"
    read_url = f"{url}/query?org={org}"
    headers = {'Authorization': f'Token {INFLUXDB_TOKEN}', 'Accept': 'application/csv', 'Content-Type': 'application/vnd.flux'}
-   
-   print(read_url)
-   print(data)
-   print(headers)
 
-   # try:
-   r = requests.post(read_url, data=data, headers=headers, timeout=10)
-   print(r.text)
-   print(f'rc={r.status_code}')
+   try:
+      r = requests.post(read_url, data=data, headers=headers, timeout=10)
+      print(r.text)
+      print(f'rc={r.status_code}')
 
-   if r.status_code in [200, 201, 202, 203, 204]:
-      err_code = 'ok'
-   else:   
-      err_code = r.text
-   # except:
-   #    err_code = 'timeout'
+      if r.status_code in [200, 201, 202, 203, 204]:
+         err_code = 'ok'
+      else:   
+         err_code = r.text
+   except:
+      err_code = 'timeout'
 
    if "volume,rain,gauge" in r.text:
-      print(r.text)
-
       lines = r.text.split('\n')
       for line in lines:
          if "volume,rain,gauge" in line:
