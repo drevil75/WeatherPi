@@ -7,8 +7,8 @@ from dotenv import dotenv_values
 
 env = dotenv_values("/var/data/syncSenecStats/.env")  # alternative dotenv_values("../pathto/myown.env") , .env is default
 INFLUXDB_TOKEN = env['INFLUXDB_TOKEN']
-INFLUXDB_USERNAME = env['INFLUXDB_USERNAME']
-INFLUXDB_PASSWORD = env['INFLUXDB_PASSWORD']
+# INFLUXDB_USERNAME = env['INFLUXDB_USERNAME']
+# INFLUXDB_PASSWORD = env['INFLUXDB_PASSWORD']
 
 config = configparser.ConfigParser()
 config.read('./config.cfg')
@@ -34,6 +34,7 @@ def write2influxapi(data):
    #          airSensors,sensor_id=TLM0202 temperature=75.30007505999716,humidity=35.651929918691714,co=0.5141876544505826 {ts}'
 
    try:
+      url += f"/write?org={org}&bucket={bucket}&precision=s"
       r = requests.post(url, data=data, headers=headers, timeout=10)
       print(f'rc={r.status_code}')
       if r.status_code in [200, 201, 202, 203, 204]:
@@ -46,7 +47,8 @@ def write2influxapi(data):
    return err_code
 
 def getInflxMonthlyRain():
-   data = "import \"date\" \nmonth = date.truncate(t: now(), unit: 1mo)\nfrom(bucket: \"WeatherPi\")\n  |> range(start: month)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"rain\")\n  |> filter(fn: (r) => r[\"_field\"] == \"volume\")\n  |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")"
+   data = f"import \"date\" \nmonth = date.truncate(t: now(), unit: 1mo)\nfrom(bucket: \"{bucket}\")\n  |> range(start: month)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"rain\")\n  |> filter(fn: (r) => r[\"_field\"] == \"volume\")\n  |> aggregateWindow(every: 1mo, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")"
+   url += f"/query?org={org}"
    print(url)
    print(data)
    print(headers)
