@@ -56,10 +56,12 @@ while True:
         osm_data = [
             {"sensor": f"{rainID}","value": f"{rainvolume}","createdAt": f"{ts}"}
         ]
-        writeBuffer('osm-rain', json.dumps(osm_data))
 
-        # writeBuffer('openhab-rain', f'{oh_rainID},{rainvolume},{ts}')
-        postOpenhabValues(oh_rainID,rainvolume, ts)
+        if rainvolume > 0:
+            writeBuffer('osm-rain', json.dumps(osm_data))
+
+            # writeBuffer('openhab-rain', f'{oh_rainID},{rainvolume},{ts}')
+            postOpenhabValues(oh_rainID,rainvolume, ts)
 
         rainvolume = 0
         Counter_Rain = 0
