@@ -5,7 +5,7 @@ import requests, json
 import configparser
 from dotenv import dotenv_values
 
-env = dotenv_values()  # alternative dotenv_values("../pathto/myown.env") , .env is default
+env = dotenv_values("/var/data/syncSenecStats/.env")  # alternative dotenv_values("../pathto/myown.env") , .env is default
 INFLUXDB_TOKEN = env['INFLUXDB_TOKEN']
 INFLUXDB_USERNAME = env['INFLUXDB_USERNAME']
 INFLUXDB_PASSWORD = env['INFLUXDB_PASSWORD']
