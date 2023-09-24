@@ -21,9 +21,9 @@ def transferOSMdata():
     filelist = glob.glob(f'{cachedir}*osm*')
     osmObj = []
     for file in filelist:
-        print(f'--------{file}')
+        # print(f'--------{file}')
         if os.path.getsize(file) > 0:
-            print(f'process file')
+            # print(f'process file')
             tmpObj = json.loads(getFileContent(file=file))
             
             for kvp in tmpObj:
@@ -49,7 +49,7 @@ def transferINFLUXdata():
     for file in filelist:
         print(f'--------{file}')
         if os.path.getsize(file) > 0:
-            print(f'process file')
+            # print(f'process file')
             data += getFileContent(file=file) + '\n'
         else:
             print(f'delete file: size=0')
