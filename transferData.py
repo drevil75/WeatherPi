@@ -34,12 +34,12 @@ def transferOSMdata():
             if os.path.isfile(file):
                     os.remove(file)
 
-        rc = ''
-        rc = postOSMvalues(osmObj)
-        if rc == 'ok':
-            for file in filelist:
-                if os.path.isfile(file):
-                    os.remove(file)
+    rc = ''
+    rc = postOSMvalues(osmObj)
+    if rc == 'ok':
+        for file in filelist:
+            if os.path.isfile(file):
+                os.remove(file)
 
 
 def transferINFLUXdata():
