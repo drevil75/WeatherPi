@@ -21,7 +21,6 @@ def transferOSMdata():
     filelist = glob.glob(f'{cachedir}*osm*')
     osmObj = []
     for file in filelist:
-        time.sleep(4)
         print(f'--------{file}')
         if os.path.getsize(file) > 0:
             print(f'process file')

@@ -65,7 +65,7 @@ sudo mkdir /mnt/ramdisk
 sudo nano /etc/fstab
 
 # ramdisk
-tmpfs /mnt/ramdisk tmpfs nodev,nosuid,size=64M 0 0
+tmpfs /mnt/ramdisk tmpfs nodev,nosuid,size=128M 0 0
 # deactivate logging of last file access
 /dev/mmcblk0p2 / ext4 defaults,nodiratime,noatime 0 1
 # forward logfiles to ramdisk

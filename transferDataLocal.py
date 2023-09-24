@@ -30,10 +30,6 @@ def transferOSMdata():
             for kvp in tmpObj:
                 osmObj.append(kvp)
 
-            # rc = ''
-            # rc = postOSMvalues(tmpObj)
-            # if rc == 'ok':
-            #     os.remove(file)
         else:
             print(f'delete file: size=0')
             if os.path.isfile(file):
@@ -46,9 +42,6 @@ def transferOSMdata():
                 if os.path.isfile(file):
                     os.remove(file)
 
-        
-
-    
 
 def transferINFLUXdata():
     # read/transfer/delete all InfluxDB Files
@@ -74,5 +67,5 @@ def transferINFLUXdata():
 if __name__ == "__main__":
     while True:
         transferOSMdata()    
-        #transferINFLUXdata()
+        transferINFLUXdata()
         time.sleep(600)

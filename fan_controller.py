@@ -13,6 +13,6 @@ GPIO.setup(fanpin, GPIO.OUT)
 while True:
 
     GPIO.output(fanpin, GPIO.HIGH)
-    time.sleep(30)
+    time.sleep(10)
     GPIO.output(fanpin, GPIO.LOW)
-    time.sleep(30)
+    time.sleep(110)
