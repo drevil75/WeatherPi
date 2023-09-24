@@ -1,3 +1,4 @@
 wpa_supplicant.conf
 .env
 __pycache__
+.DS_Store
