@@ -4,9 +4,9 @@ from apis.send2opensensemap import *
 from apis.send2openhab import *
 from apis.send2buffer import writeBuffer
 
-config = configparser.ConfigParser()
-config.read('./config.cfg')
-cachedir = config['default']['cachedir']
+#config = configparser.ConfigParser()
+#config.read('./config.cfg')
+cachedir = '/Users/mirko/Nextcloud/dev/WeatherPi/cache/bkp/'
 
 
 def getFileContent(file):
@@ -30,6 +30,10 @@ def transferOSMdata():
             for kvp in tmpObj:
                 osmObj.append(kvp)
 
+            # rc = ''
+            # rc = postOSMvalues(tmpObj)
+            # if rc == 'ok':
+            #     os.remove(file)
         else:
             print(f'delete file: size=0')
             if os.path.isfile(file):
@@ -42,6 +46,9 @@ def transferOSMdata():
                 if os.path.isfile(file):
                     os.remove(file)
 
+        
+
+    
 
 def transferINFLUXdata():
     # read/transfer/delete all InfluxDB Files
@@ -54,8 +61,7 @@ def transferINFLUXdata():
             data += getFileContent(file=file) + '\n'
         else:
             print(f'delete file: size=0')
-            if os.path.isfile(file):
-                    os.remove(file)
+            os.remove(file)
 
     rc = ''
     rc = write2influxapi(data)
@@ -68,5 +74,5 @@ def transferINFLUXdata():
 if __name__ == "__main__":
     while True:
         transferOSMdata()    
-        transferINFLUXdata()
+        #transferINFLUXdata()
         time.sleep(600)
