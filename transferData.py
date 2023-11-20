@@ -18,7 +18,7 @@ def getFileContent(file):
 
 def transferOSMdata():
     # read/transfer/delete all OSM Files
-    filelist = glob.glob(f'{cachedir}*osm*')
+    filelist = glob.glob(f'{cachedir}*osm*')[:720]
     osmObj = []
     for file in filelist:
         # print(f'--------{file}')

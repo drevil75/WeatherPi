@@ -6,7 +6,7 @@ from apis.send2buffer import writeBuffer
 
 #config = configparser.ConfigParser()
 #config.read('./config.cfg')
-cachedir = '/Users/mirko/Nextcloud/dev/WeatherPi/cache/bkp/'
+cachedir = '/Users/mirko/Nextcloud/dev/WeatherPi/cache/'
 
 
 def getFileContent(file):
@@ -19,9 +19,10 @@ def getFileContent(file):
 def transferOSMdata():
     # read/transfer/delete all OSM Files
     filelist = glob.glob(f'{cachedir}*osm*')
+    filelist = filelist[:720]
     osmObj = []
     for file in filelist:
-        time.sleep(4)
+        # time.sleep(4)
         print(f'--------{file}')
         if os.path.getsize(file) > 0:
             print(f'process file')
@@ -35,12 +36,12 @@ def transferOSMdata():
             if os.path.isfile(file):
                     os.remove(file)
 
-        rc = ''
-        rc = postOSMvalues(osmObj)
-        if rc == 'ok':
-            for file in filelist:
-                if os.path.isfile(file):
-                    os.remove(file)
+    rc = ''
+    rc = postOSMvalues(osmObj)
+    if rc == 'ok':
+        for file in filelist:
+            if os.path.isfile(file):
+                os.remove(file)
 
 
 def transferINFLUXdata():
@@ -55,6 +56,7 @@ def transferINFLUXdata():
         else:
             print(f'delete file: size=0')
             os.remove(file)
+            print(f'remove file 0byte {file}')
 
     rc = ''
     rc = write2influxapi(data)
@@ -62,10 +64,11 @@ def transferINFLUXdata():
         for file in filelist:
             if os.path.isfile(file):
                 os.remove(file)
+                print(f'remove file {file}')
 
 
 if __name__ == "__main__":
     while True:
         transferOSMdata()    
-        transferINFLUXdata()
-        time.sleep(600)
+        # transferINFLUXdata()
+        time.sleep(30)
