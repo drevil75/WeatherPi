@@ -15,4 +15,4 @@ while True:
     GPIO.output(fanpin, GPIO.HIGH)
     time.sleep(10)
     GPIO.output(fanpin, GPIO.LOW)
-    time.sleep(110)
+    time.sleep(3600)
